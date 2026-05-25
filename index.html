@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Knocklyon Internal Tournament</title>
+
+<style>
+  body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #fff1f2;
+  }
+
+  .container {
+    max-width: 1000px;
+    margin: auto;
+    padding: 20px;
+  }
+
+  .card {
+    background: white;
+    border: 1px solid #fecdd3;
+    border-radius: 12px;
+    padding: 24px;
+    margin-bottom: 20px;
+  }
+
+  h1 {
+    color: #b91c1c;
+    font-size: 22px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  h2 {
+    color: #b91c1c;
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+  }
+
+  input[type="file"], input[type="text"] {
+    width: 100%;
+    padding: 6px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+  }
+
+  button {
+    background: #dc2626;
+    color: white;
+    border: none;
+    padding: 10px 14px;
+    border-radius: 8px;
+    cursor: pointer;
+    margin-right: 10px;
+  }
+
+  button.secondary {
+    background: #e5e7eb;
+    color: black;
+  }
+
+  .row {
+    display: flex;
+    justify-content: space-between;
+    border: 1px solid #fca5a5;
+    padding: 8px;
+    border-radius: 6px;
+    margin-bottom: 6px;
+    font-size: 13px;
+  }
+
+  .match {
+    border: 1px solid #fca5a5;
+    padding: 14px;
+    border-radius: 10px;
+    margin-bottom: 14px;
+  }
+
+  .flex {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    margin-top: 10px;
+  }
+
+  input[type="text"] {
+    padding: 6px;
+    border-radius: 6px;
+    border: 1px solid #ddd;
+  }
+
+  .logo {
+    width: 40px;
+    height: 40px;
+    object-fit: contain;
+  }
+</style>
+</head>
+
+<body>
+<div class="container">
+
+  <!-- HEADER -->
+  <div class="card">
+    <h1>
+      <img src="kbc.png" class="logo"/>
+      Knocklyon Internal Tournament
+    </h1>
+
+    <div class="grid">
+      <div>
+        <p style="color:#dc2626;font-weight:bold;">Men</p>
+        <input type="file" id="menFile" accept=".csv">
+      </div>
+
+      <div>
+        <p style="color:#dc2626;font-weight:bold;">Mixed</p>
+        <input type="file" id="mixedFile" accept=".csv">
+      </div>
+
+      <div>
+        <p style="color:#dc2626;font-weight:bold;">Ladies</p>
+        <input type="file" id="ladiesFile" accept=".csv">
+      </div>
+    </div>
+
+    <br/>
+
+    <button onclick="generateTeams()">Generate Teams</button>
+    <button class="secondary" onclick="generateFixtures()">Generate Fixtures</button>
+  </div>
+
+  <div class="card" id="leaderboardCard" style="display:none;">
+    <h2>Leaderboard</h2>
+    <div id="leaderboard"></div>
+  </div>
+
+  <div class="card" id="fixturesCard" style="display:none;">
+    <h2>Fixtures</h2>
+    <div id="fixtures"></div>
+  </div>
+
+</div>
+
+<script>
+
+/* ---------------- STATE ---------------- */
+let menFile = [];
+let mixedFile = [];
+let ladiesFile = [];
+
+let teams = [];
+let fixtures = [];
+let matchScores = {};
+let matchHistory = new Set();
+
+/* ---------------- STORAGE ---------------- */
+const STORAGE_KEY = "tournamentState";
+
+function saveState(){
+  localStorage.setItem(STORAGE_KEY, JSON.stringify({
+    menFile,
+    mixedFile,
+    ladiesFile,
+    teams,
+    fixtures,
+    matchScores,
+    matchHistory: Array.from(matchHistory)
+  }));
+}
+
+function loadState(){
+  const data = localStorage.getItem(STORAGE_KEY);
+  if(!data) return;
+
+  const s = JSON.parse(data);
+
+  menFile = s.menFile || [];
+  mixedFile = s.mixedFile || [];
+  ladiesFile = s.ladiesFile || [];
+
+  teams = s.teams || [];
+  fixtures = s.fixtures || [];
+  matchScores = s.matchScores || {};
+  matchHistory = new Set(s.matchHistory || []);
+
+  render();
+}
+
+loadState();
+
+/* ---------------- CSV ---------------- */
+function parseCSV(text, group){
+  return text.split("\n")
+    .map(l=>l.trim())
+    .filter(Boolean)
+    .map((line,i)=>{
+      const [name,gender,level,pref]=line.split(",").map(x=>x?.trim());
+      return {
+        id: group+"_"+i,
+        name,
+        gender,
+        level: parseInt(level)||0,
+        pref: pref||"mixed",
+        group
+      };
+    });
+}
+
+/* ---------------- FILES ---------------- */
+function handleFile(file,setter,group){
+  if(!file) return;
+  const reader=new FileReader();
+  reader.onload=(e)=>{
+    setter(parseCSV(e.target.result,group));
+    saveState();
+  };
+  reader.readAsText(file);
+}
+
+document.getElementById("menFile").onchange=e=>
+  handleFile(e.target.files[0],d=>menFile=d,"men");
+
+document.getElementById("mixedFile").onchange=e=>
+  handleFile(e.target.files[0],d=>mixedFile=d,"mixed");
+
+document.getElementById("ladiesFile").onchange=e=>
+  handleFile(e.target.files[0],d=>ladiesFile=d,"ladies");
+
+/* ---------------- TEAMS ---------------- */
+function getAllPlayers(){
+  return [...menFile,...mixedFile,...ladiesFile];
+}
+
+function generateTeams(){
+  const all=getAllPlayers();
+  const sorted=[...all].sort((a,b)=>b.level-a.level);
+
+  let l=0,r=sorted.length-1;
+  teams=[];
+
+  while(l<r){
+    teams.push({
+      id:`T${l}-${r}`,
+      team:[sorted[l],sorted[r]],
+      avgLevel:(sorted[l].level+sorted[r].level)/2
+    });
+    l++;r--;
+  }
+
+  matchHistory=new Set();
+  fixtures=[];
+  matchScores={};
+
+  saveState();
+  render();
+}
+
+/* ---------------- FIXTURES ---------------- */
+function getHandicap(a,b){
+  const diff=b.avgLevel-a.avgLevel;
+  if(Math.abs(diff)<0.75) return 0;
+  if(Math.abs(diff)<1.5) return diff>0?-1:1;
+  return diff>0?-2:2;
+}
+
+function generateFixtures(){
+  if(!teams.length) return;
+
+  fixtures=[];
+
+  for(let r=0;r<8;r++){
+    const sorted=[...teams].sort((a,b)=>
+      (getStats()[b.id]?.points||0)-(getStats()[a.id]?.points||0)
+    );
+
+    const used=new Set();
+    const round=[];
+
+    for(let i=0;i<sorted.length&&round.length<3;i++){
+      const t1=sorted[i];
+      if(used.has(t1.id)) continue;
+
+      let opponent=null;
+
+      for(let j=i+1;j<sorted.length;j++){
+        const t2=sorted[j];
+        const key=[t1.id,t2.id].sort().join("-");
+        if(!used.has(t2.id)&&!matchHistory.has(key)){
+          opponent=t2;
+          matchHistory.add(key);
+          break;
+        }
+      }
+
+      if(!opponent) continue;
+
+      used.add(t1.id);
+      used.add(opponent.id);
+
+      round.push({
+        id:`${r}-${round.length}`,
+        match:[t1,opponent],
+        handicap:getHandicap(t1,opponent)
+      });
+    }
+
+    if(round.length) fixtures.push(round);
+  }
+
+  saveState();
+  render();
+}
+
+/* ---------------- SCORE ---------------- */
+function updateScore(id,f,v){
+  if(!matchScores[id]) matchScores[id]={};
+  matchScores[id][f]=Number(v)||0;
+  saveState();
+}
+
+function computeStats(s){
+  const a1=s.a1||0,b1=s.b1||0,a2=s.a2||0,b2=s.b2||0;
+
+  const setsA=(a1>b1?1:0)+(a2>b2?1:0);
+  const setsB=2-setsA;
+
+  const diff=(a1-b1)+(a2-b2);
+
+  return {
+    A:{points:setsA,setsWon:setsA,setsLost:setsB,diff},
+    B:{points:setsB,setsWon:setsB,setsLost:setsA,diff:-diff}
+  };
+}
+
+/* ---------------- FIX: ALWAYS FRESH STATS ---------------- */
+function getStats(){
+  const stats={};
+
+  teams.forEach(t=>{
+    stats[t.id]={points:0,setsWon:0,setsLost:0,diff:0};
+  });
+
+  const all=fixtures.flat();
+
+  for(const id in matchScores){
+    const match=all.find(m=>m.id===id);
+    if(!match) continue;
+
+    const s=computeStats(matchScores[id]);
+
+    const A=match.match[0].id;
+    const B=match.match[1].id;
+
+    if(!stats[A]||!stats[B]) continue;
+
+    stats[A].points+=s.A.points;
+    stats[A].setsWon+=s.A.setsWon;
+    stats[A].setsLost+=s.A.setsLost;
+    stats[A].diff+=s.A.diff;
+
+    stats[B].points+=s.B.points;
+    stats[B].setsWon+=s.B.setsWon;
+    stats[B].setsLost+=s.B.setsLost;
+    stats[B].diff+=s.B.diff;
+  }
+
+  return stats;
+}
+
+/* ---------------- RENDER ---------------- */
+function render(){
+
+  const stats=getStats();
+
+  const lb=document.getElementById("leaderboard");
+
+  const sorted=teams.map(t=>({
+    ...t,
+    s:stats[t.id]||{points:0,setsWon:0,setsLost:0,diff:0}
+  })).sort((a,b)=>b.s.points-a.s.points);
+
+  if(sorted.length){
+    document.getElementById("leaderboardCard").style.display="block";
+
+    lb.innerHTML=sorted.map((t,i)=>
+      `<div class="row">
+        <span>${i+1}. ${t.team[0]?.name} & ${t.team[1]?.name}</span>
+        <span>P:${t.s.points} SW:${t.s.setsWon} SL:${t.s.setsLost} D:${t.s.diff}</span>
+      </div>`
+    ).join("");
+  }
+
+  const fx=document.getElementById("fixtures");
+
+  if(fixtures.length){
+    document.getElementById("fixturesCard").style.display="block";
+
+    fx.innerHTML=fixtures.map((r,i)=>
+      `<div>
+        <b style="color:#dc2626">Round ${i+1}</b>
+
+        ${r.map(m=>{
+          const s=matchScores[m.id]||{};
+
+          return `
+          <div class="match">
+
+            <div>
+              <b>${m.match[0].team[0].name} & ${m.match[0].team[1].name}</b>
+              vs
+              <b>${m.match[1].team[0].name} & ${m.match[1].team[1].name}</b>
+
+              <span style="margin-left:10px;color:#dc2626;font-size:12px;font-weight:700">
+                ${
+                  m.handicap===0
+                    ? "No handicap"
+                    : m.handicap>0
+                      ? `${m.match[1].team[0].name} & ${m.match[1].team[1].name} +${m.handicap}`
+                      : `${m.match[0].team[0].name} & ${m.match[0].team[1].name} +${Math.abs(m.handicap)}`
+                }
+              </span>
+            </div>
+
+            <div class="flex">
+              <input value="${s.a1??''}" placeholder="A1"
+                oninput="updateScore('${m.id}','a1',this.value)">
+              -
+              <input value="${s.b1??''}" placeholder="B1"
+                oninput="updateScore('${m.id}','b1',this.value)">
+            </div>
+
+            <div class="flex">
+              <input value="${s.a2??''}" placeholder="A2"
+                oninput="updateScore('${m.id}','a2',this.value)">
+              -
+              <input value="${s.b2??''}" placeholder="B2"
+                oninput="updateScore('${m.id}','b2',this.value)">
+            </div>
+
+            <button onclick='saveScore();render();'>
+              Save Score
+            </button>
+
+          </div>`;
+        }).join("")}
+
+      </div>`
+    ).join("");
+  }
+}
+</script>
+
+</body>
+</html>
