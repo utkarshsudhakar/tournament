@@ -178,6 +178,21 @@
     letter-spacing: 0.03em;
   }
 
+  .badge-type-mixed {
+    background: #ede9fe;
+    color: #5b21b6;
+  }
+
+  .badge-type-men {
+    background: #dbeafe;
+    color: #1d4ed8;
+  }
+
+  .badge-type-ladies {
+    background: #fce7f3;
+    color: #9d174d;
+  }
+
   .alert {
     background: var(--amber-50);
     border: 1px solid #fcd34d;
@@ -1066,13 +1081,13 @@
 
         <div class="rules-section">
           <h3>1. Team pairing logic</h3>
-          <p>Teams are formed automatically as balanced doubles pairs:</p>
+          <p>Teams are formed in this <strong>order of preference</strong>:</p>
           <ol>
-            <li><strong>Preferred:</strong> partners at least <strong>2 levels apart</strong> (e.g. Level 5 with Level 3).</li>
-            <li><strong>Next best:</strong> if not possible, partners <strong>1 level apart</strong>.</li>
-            <li><strong>Fallback:</strong> if still required, similar levels may be paired so <strong>everyone plays</strong>.</li>
+            <li><strong>Mixed</strong> — one man and one woman (preferred).</li>
+            <li><strong>Men</strong> — two men, if mixed pairs are not possible.</li>
+            <li><strong>Ladies</strong> — two women, only when no mixed or men pairing remains.</li>
           </ol>
-          <p>Each team’s <strong>average level</strong> is shown after pairing. An odd number of players results in one bye.</p>
+          <p>Within each step, partners are balanced by level: <strong>2+ levels apart</strong> first, then <strong>1 level</strong>, then similar levels so everyone plays. Team <strong>average levels</strong> are kept as even as possible across the draw.</p>
         </div>
 
         <div class="rules-section">
@@ -1247,7 +1262,8 @@ function loadState() {
     teams = (s.teams || []).map(t => ({
       ...t,
       pairGap: t.pairGap ?? 2,
-      pairTier: t.pairTier || "ideal"
+      pairTier: t.pairTier || "ideal",
+      teamType: t.teamType || inferTeamType(t)
     }));
     unpairedPlayers = s.unpairedPlayers || [];
     pairingWarnings = s.pairingWarnings || [];
@@ -1354,6 +1370,28 @@ function isAllMenTeam(team) {
   return isMale(a) && isMale(b);
 }
 
+/** Both players female */
+function isAllLadiesTeam(team) {
+  const [a, b] = team.team;
+  return isFemale(a) && isFemale(b);
+}
+
+function inferTeamType(team) {
+  if (isMixedDoublesTeam(team)) return "mixed";
+  if (isAllMenTeam(team)) return "men";
+  if (isAllLadiesTeam(team)) return "ladies";
+  return "mixed";
+}
+
+function isValidPairForType(p, q, teamType) {
+  if (teamType === "mixed") {
+    return (isMale(p) && isFemale(q)) || (isFemale(p) && isMale(q));
+  }
+  if (teamType === "men") return isMale(p) && isMale(q);
+  if (teamType === "ladies") return isFemale(p) && isFemale(q);
+  return false;
+}
+
 function teamStrength(pair) {
   return pair[0].level + pair[1].level;
 }
@@ -1374,17 +1412,26 @@ function teamTierBadge(t) {
   return `<span class="badge">${label}</span>`;
 }
 
+function teamTypeBadge(t) {
+  const type = t.teamType || inferTeamType(t);
+  const labels = { mixed: "Mixed", men: "Men", ladies: "Ladies" };
+  const cls = { mixed: "badge-type-mixed", men: "badge-type-men", ladies: "badge-type-ladies" };
+  return `<span class="badge ${cls[type] || ""}">${labels[type] || type}</span>`;
+}
+
 function getPairGap(team) {
   if (team.pairGap != null) return team.pairGap;
   return team.pairTier === "fair" ? 1 : team.pairTier === "fallback" ? 0 : 2;
 }
 
-function makeTeam(p, q) {
+function makeTeam(p, q, teamType) {
   const gap = levelGap(p, q);
   const sum = p.level + q.level;
+  const type = teamType || inferTeamType({ team: [p, q] });
   return {
     id: `T_${p.id}_${q.id}`,
     team: [p, q],
+    teamType: type,
     sumLevel: sum,
     avgLevel: sum / 2,
     pairGap: gap,
@@ -1398,23 +1445,36 @@ function matchKey(idA, idB) {
 
 /* ========== TEAM GENERATION ========== */
 /**
- * Pair players in passes: gap≥2 (ideal), gap≥1 (fair), then any remaining (fallback).
- * Everyone plays except with an odd player count (one bye).
+ * Pair by team type (mixed → men → ladies) at a given min level gap.
+ * Prefers largest gap; tie-breaks toward the target average level for balance.
  */
-function pairPass(remaining, minGap, preferLargestGap) {
+function pairPassByType(remaining, minGap, preferLargestGap, teamType) {
   const used = new Set();
   const newTeams = [];
   const sorted = [...remaining].sort((a, b) => b.level - a.level || Math.random() - 0.5);
+  const targetAvg = remaining.length
+    ? remaining.reduce((s, x) => s + x.level, 0) / remaining.length
+    : 3;
 
   for (const p of sorted) {
     if (used.has(p.id)) continue;
 
     const candidates = sorted
-      .filter(q => !used.has(q.id) && q.id !== p.id && levelGap(p, q) >= minGap)
+      .filter(q =>
+        !used.has(q.id) &&
+        q.id !== p.id &&
+        levelGap(p, q) >= minGap &&
+        isValidPairForType(p, q, teamType)
+      )
       .sort((a, b) => {
         const ga = levelGap(p, a);
         const gb = levelGap(p, b);
         if (ga !== gb) return preferLargestGap ? gb - ga : ga - gb;
+        const avgA = (p.level + a.level) / 2;
+        const avgB = (p.level + b.level) / 2;
+        const da = Math.abs(avgA - targetAvg);
+        const db = Math.abs(avgB - targetAvg);
+        if (da !== db) return da - db;
         return Math.random() - 0.5;
       });
 
@@ -1423,7 +1483,7 @@ function pairPass(remaining, minGap, preferLargestGap) {
     const partner = candidates[0];
     used.add(p.id);
     used.add(partner.id);
-    newTeams.push(makeTeam(p, partner));
+    newTeams.push(makeTeam(p, partner, teamType));
   }
 
   return {
@@ -1444,15 +1504,24 @@ function generateTeams() {
   pairingWarnings = [];
 
   let remaining = shuffle(all);
-
-  for (const { minGap, preferLargestGap } of [
+  const gapPasses = [
     { minGap: 2, preferLargestGap: true },
     { minGap: 1, preferLargestGap: true },
     { minGap: 0, preferLargestGap: false }
-  ]) {
-    const { teams: paired, remaining: left } = pairPass(remaining, minGap, preferLargestGap);
-    teams.push(...paired);
-    remaining = left;
+  ];
+  const typeOrder = ["mixed", "men", "ladies"];
+
+  for (const pass of gapPasses) {
+    for (const teamType of typeOrder) {
+      const { teams: paired, remaining: left } = pairPassByType(
+        remaining,
+        pass.minGap,
+        pass.preferLargestGap,
+        teamType
+      );
+      teams.push(...paired);
+      remaining = left;
+    }
   }
 
   if (remaining.length === 1) {
@@ -1463,7 +1532,23 @@ function generateTeams() {
   } else if (remaining.length > 0) {
     unpairedPlayers = remaining;
     pairingWarnings.push(
-      `${remaining.length} player(s) could not be placed — check CSV data.`
+      `${remaining.length} player(s) could not be placed — check gender balance in the CSV.`
+    );
+  }
+
+  const mixedN = teams.filter(t => t.teamType === "mixed").length;
+  const menN = teams.filter(t => t.teamType === "men").length;
+  const ladiesN = teams.filter(t => t.teamType === "ladies").length;
+  pairingWarnings.push(
+    `Teams formed: ${mixedN} mixed, ${menN} men, ${ladiesN} ladies.`
+  );
+
+  const avgs = teams.map(t => t.avgLevel);
+  if (avgs.length > 1) {
+    const mean = avgs.reduce((a, b) => a + b, 0) / avgs.length;
+    const spread = Math.max(...avgs) - Math.min(...avgs);
+    pairingWarnings.push(
+      `Average team levels range from ${Math.min(...avgs).toFixed(1)} to ${Math.max(...avgs).toFixed(1)} (spread ${spread.toFixed(1)}).`
     );
   }
 
@@ -1471,7 +1556,7 @@ function generateTeams() {
   const fairCount = teams.filter(t => t.pairTier === "fair").length;
   if (fallbackCount) {
     pairingWarnings.push(
-      `${fallbackCount} team(s) use similar skill levels (gap 0) — matches vs stronger pairs use +2/+3 handicaps.`
+      `${fallbackCount} team(s) use similar skill levels (gap 0) — weaker sides may get +2/+3 handicaps in play.`
     );
   }
   if (fairCount) {
@@ -2132,7 +2217,7 @@ function render() {
       `<div class="team-item">
         <span class="team-num">${String(i + 1).padStart(2, "0")}</span>
         <div>
-          <div class="team-names">${teamLabel(t)} ${teamTierBadge(t)}</div>
+          <div class="team-names">${teamLabel(t)} ${teamTypeBadge(t)} ${teamTierBadge(t)}</div>
           <div class="team-meta">Avg ${formatAvgLevel(t.avgLevel)}${t.pool != null ? ` · Court ${t.pool + 1}` : ""}</div>
         </div>
       </div>`
