@@ -4,102 +4,1046 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>Knocklyon Internal Tournament</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&display=swap" rel="stylesheet">
 
 <style>
+  :root {
+    --red-50: #fff1f2;
+    --red-100: #ffe4e6;
+    --red-200: #fecdd3;
+    --red-300: #fda4af;
+    --red-500: #f43f5e;
+    --red-600: #e11d48;
+    --red-700: #be123c;
+    --red-800: #9f1239;
+    --gray-50: #f9fafb;
+    --gray-100: #f3f4f6;
+    --gray-200: #e5e7eb;
+    --gray-400: #9ca3af;
+    --gray-500: #6b7280;
+    --gray-700: #374151;
+    --gray-900: #111827;
+    --green-50: #f0fdf4;
+    --green-700: #15803d;
+    --amber-50: #fffbeb;
+    --shadow-sm: 0 1px 2px rgba(15, 23, 42, 0.05);
+    --shadow-md: 0 4px 16px rgba(190, 18, 60, 0.08);
+    --shadow-lg: 0 12px 40px rgba(190, 18, 60, 0.1);
+    --radius: 14px;
+    --radius-sm: 10px;
+  }
+
+  * { box-sizing: border-box; }
+
   body {
     margin: 0;
-    font-family: Arial, sans-serif;
-    background: #fff1f2;
+    font-family: "DM Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    background: linear-gradient(160deg, #fff5f5 0%, #fff1f2 40%, #fef2f2 100%);
+    color: var(--gray-900);
+    line-height: 1.5;
+    min-height: 100vh;
   }
 
   .container {
-    max-width: 1000px;
-    margin: auto;
-    padding: 20px;
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 24px 20px 48px;
   }
 
   .card {
-    background: white;
-    border: 1px solid #fecdd3;
-    border-radius: 12px;
-    padding: 24px;
+    background: #fff;
+    border: 1px solid var(--red-200);
+    border-radius: var(--radius);
+    padding: 28px;
     margin-bottom: 20px;
+    box-shadow: var(--shadow-sm);
   }
 
-  h1 {
-    color: #b91c1c;
-    font-size: 22px;
+  .card-hero {
+    background: linear-gradient(135deg, #fff 0%, #fff5f5 100%);
+    border-color: var(--red-200);
+    box-shadow: var(--shadow-md);
+  }
+
+  .hero-top {
     display: flex;
     align-items: center;
-    gap: 10px;
-  }
-
-  h2 {
-    color: #b91c1c;
-  }
-
-  .grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 10px;
-  }
-
-  input[type="file"], input[type="text"] {
-    width: 100%;
-    padding: 6px;
-    border: 1px solid #ddd;
-    border-radius: 6px;
-  }
-
-  button {
-    background: #dc2626;
-    color: white;
-    border: none;
-    padding: 10px 14px;
-    border-radius: 8px;
-    cursor: pointer;
-    margin-right: 10px;
-  }
-
-  button.secondary {
-    background: #e5e7eb;
-    color: black;
-  }
-
-  .row {
-    display: flex;
-    justify-content: space-between;
-    border: 1px solid #fca5a5;
-    padding: 8px;
-    border-radius: 6px;
-    margin-bottom: 6px;
-    font-size: 13px;
-  }
-
-  .match {
-    border: 1px solid #fca5a5;
-    padding: 14px;
-    border-radius: 10px;
-    margin-bottom: 14px;
-  }
-
-  .flex {
-    display: flex;
-    gap: 10px;
-    align-items: center;
-    margin-top: 10px;
-  }
-
-  input[type="text"] {
-    padding: 6px;
-    border-radius: 6px;
-    border: 1px solid #ddd;
+    gap: 16px;
+    margin-bottom: 8px;
   }
 
   .logo {
-    width: 40px;
-    height: 40px;
+    width: 52px;
+    height: 52px;
     object-fit: contain;
+    border-radius: 12px;
+    background: #fff;
+    padding: 4px;
+    box-shadow: var(--shadow-sm);
+  }
+
+  h1 {
+    margin: 0;
+    color: var(--red-800);
+    font-size: 1.5rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+  }
+
+  .hero-sub {
+    margin: 0 0 20px 68px;
+    font-size: 0.9rem;
+    color: var(--gray-500);
+  }
+
+  @media (max-width: 520px) {
+    .hero-sub { margin-left: 0; margin-top: 4px; }
+    .hero-top { flex-wrap: wrap; }
+  }
+
+  h2 {
+    color: var(--red-800);
+    margin: 0;
+    font-size: 1.05rem;
+    font-weight: 700;
+  }
+
+  h3 {
+    color: var(--red-800);
+    font-size: 0.9rem;
+    margin: 0 0 10px;
+    font-weight: 600;
+  }
+
+  input[type="text"] {
+    width: 100%;
+    padding: 8px 12px;
+    border: 1px solid var(--gray-200);
+    border-radius: 8px;
+    font-family: inherit;
+    font-size: 14px;
+    transition: border-color 0.15s, box-shadow 0.15s;
+  }
+
+  input[type="text"]:focus {
+    outline: none;
+    border-color: var(--red-300);
+    box-shadow: 0 0 0 3px rgba(244, 63, 94, 0.15);
+  }
+
+  button {
+    font-family: inherit;
+    font-size: 0.875rem;
+    font-weight: 600;
+    border: none;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    transition: transform 0.12s, box-shadow 0.12s, background 0.12s;
+  }
+
+  button:hover:not(:disabled) {
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-sm);
+  }
+
+  button:active:not(:disabled) {
+    transform: translateY(0);
+  }
+
+  button:disabled {
+    opacity: 0.45;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+  }
+
+  .hint {
+    font-size: 0.8rem;
+    color: var(--gray-500);
+    margin: 8px 0 0;
+    line-height: 1.5;
+  }
+
+  .badge {
+    display: inline-block;
+    background: var(--red-100);
+    color: var(--red-700);
+    font-size: 0.68rem;
+    font-weight: 700;
+    padding: 3px 9px;
+    border-radius: 999px;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+  }
+
+  .alert {
+    background: var(--amber-50);
+    border: 1px solid #fcd34d;
+    color: #92400e;
+    padding: 12px 14px;
+    border-radius: var(--radius-sm);
+    font-size: 0.85rem;
+    margin: 10px 0;
+  }
+
+  .alert.error {
+    background: #fef2f2;
+    border-color: var(--red-300);
+    color: var(--red-800);
+  }
+
+  /* Stepper */
+  .stepper {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin: 24px 0 28px;
+    padding: 0 4px;
+    gap: 4px;
+  }
+
+  .stepper-item {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    position: relative;
+    min-width: 0;
+  }
+
+  .stepper-item:not(:last-child)::after {
+    content: "";
+    position: absolute;
+    top: 14px;
+    left: calc(50% + 18px);
+    width: calc(100% - 36px);
+    height: 2px;
+    background: var(--gray-200);
+    z-index: 0;
+  }
+
+  .stepper-item.done:not(:last-child)::after {
+    background: var(--red-300);
+  }
+
+  .stepper-dot {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background: var(--gray-100);
+    color: var(--gray-500);
+    font-size: 0.75rem;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    z-index: 1;
+    border: 2px solid var(--gray-200);
+    transition: all 0.2s;
+  }
+
+  .stepper-item.done .stepper-dot {
+    background: var(--green-50);
+    border-color: #86efac;
+    color: var(--green-700);
+  }
+
+  .stepper-item.active .stepper-dot {
+    background: var(--red-600);
+    border-color: var(--red-600);
+    color: #fff;
+    box-shadow: 0 0 0 4px rgba(225, 29, 72, 0.2);
+  }
+
+  .stepper-label {
+    margin-top: 8px;
+    font-size: 0.68rem;
+    font-weight: 600;
+    color: var(--gray-400);
+    line-height: 1.2;
+    max-width: 72px;
+  }
+
+  .stepper-item.done .stepper-label { color: var(--gray-700); }
+  .stepper-item.active .stepper-label { color: var(--red-700); }
+
+  @media (max-width: 560px) {
+    .stepper-label { font-size: 0.6rem; max-width: 56px; }
+    .stepper-dot { width: 26px; height: 26px; font-size: 0.65rem; }
+  }
+
+  /* Upload */
+  .upload-block {
+    margin: 20px 0 24px;
+  }
+
+  .upload-label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 10px;
+  }
+
+  .upload-label p {
+    margin: 0;
+    font-weight: 700;
+    font-size: 0.9rem;
+    color: var(--red-800);
+  }
+
+  .file-drop {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 28px 20px;
+    border: 2px dashed var(--red-200);
+    border-radius: var(--radius);
+    background: var(--red-50);
+    cursor: pointer;
+    transition: border-color 0.15s, background 0.15s;
+    text-align: center;
+  }
+
+  .file-drop:hover,
+  .file-drop.dragover {
+    border-color: var(--red-500);
+    background: #fff;
+  }
+
+  .file-drop-icon {
+    font-size: 1.75rem;
+    line-height: 1;
+  }
+
+  .file-drop-title {
+    font-weight: 600;
+    color: var(--red-800);
+    font-size: 0.95rem;
+  }
+
+  .file-drop-hint {
+    font-size: 0.8rem;
+    color: var(--gray-500);
+  }
+
+  .file-input-hidden {
+    position: absolute;
+    width: 0;
+    height: 0;
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .players-loaded {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 10px;
+    padding: 6px 12px;
+    background: var(--green-50);
+    color: var(--green-700);
+    border-radius: 999px;
+    font-size: 0.8rem;
+    font-weight: 600;
+  }
+
+  .players-loaded:empty { display: none; }
+
+  /* Actions */
+  .action-section-title {
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--gray-500);
+    margin: 0 0 12px;
+  }
+
+  .action-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+    margin-bottom: 12px;
+  }
+
+  @media (min-width: 640px) {
+    .action-grid { grid-template-columns: repeat(4, 1fr); }
+  }
+
+  .action-btn {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+    padding: 14px 14px;
+    background: linear-gradient(180deg, var(--red-600) 0%, var(--red-700) 100%);
+    color: #fff;
+    text-align: left;
+    min-height: 72px;
+  }
+
+  .action-btn .action-num {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 22px;
+    height: 22px;
+    background: rgba(255,255,255,0.25);
+    border-radius: 6px;
+    font-size: 0.75rem;
+    font-weight: 700;
+  }
+
+  .action-btn .action-text {
+    font-size: 0.8rem;
+    line-height: 1.25;
+  }
+
+  .btn-reset {
+    width: 100%;
+    padding: 11px;
+    background: var(--gray-100);
+    color: var(--gray-700);
+    border: 1px solid var(--gray-200);
+  }
+
+  .btn-reset:hover:not(:disabled) {
+    background: var(--gray-200);
+  }
+
+  /* Lists */
+  .team-item {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 12px 14px;
+    background: var(--gray-50);
+    border: 1px solid var(--gray-200);
+    border-radius: var(--radius-sm);
+    margin-bottom: 8px;
+    transition: border-color 0.15s;
+  }
+
+  .team-item:hover {
+    border-color: var(--red-200);
+  }
+
+  .team-num {
+    font-size: 0.75rem;
+    font-weight: 700;
+    color: var(--red-600);
+    background: var(--red-100);
+    min-width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+  }
+
+  .team-names {
+    font-weight: 600;
+    font-size: 0.9rem;
+    color: var(--gray-900);
+  }
+
+  .team-meta {
+    font-size: 0.78rem;
+    color: var(--gray-500);
+    margin-top: 2px;
+  }
+
+  .courts-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+
+  @media (min-width: 700px) {
+    .courts-grid { grid-template-columns: repeat(3, 1fr); }
+  }
+
+  .court-card {
+    background: linear-gradient(180deg, #fff 0%, var(--red-50) 100%);
+    border: 1px solid var(--red-200);
+    border-radius: var(--radius-sm);
+    padding: 16px;
+    box-shadow: var(--shadow-sm);
+  }
+
+  .court-card-head {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 12px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--red-100);
+  }
+
+  .court-card-head .court-tag {
+    background: var(--red-600);
+    color: #fff;
+    font-size: 0.7rem;
+    font-weight: 700;
+    padding: 4px 10px;
+    border-radius: 999px;
+  }
+
+  .court-team-row {
+    font-size: 0.85rem;
+    padding: 6px 0;
+    color: var(--gray-700);
+    display: flex;
+    gap: 8px;
+  }
+
+  .court-team-row span:first-child {
+    color: var(--red-600);
+    font-weight: 700;
+    min-width: 18px;
+  }
+
+  /* Match cards */
+  .round-block {
+    margin-bottom: 28px;
+  }
+
+  .round-header {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    margin-bottom: 14px;
+    padding-bottom: 8px;
+    border-bottom: 2px solid var(--red-100);
+  }
+
+  .round-header h4 {
+    margin: 0;
+    font-size: 1rem;
+    color: var(--red-800);
+    font-weight: 700;
+  }
+
+  .matches-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+
+  @media (min-width: 800px) {
+    .matches-grid { grid-template-columns: repeat(3, 1fr); }
+  }
+
+  .match-card {
+    background: #fff;
+    border: 1px solid var(--red-200);
+    border-radius: var(--radius-sm);
+    padding: 16px;
+    box-shadow: var(--shadow-sm);
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .match-card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  .court-pill {
+    background: var(--red-600);
+    color: #fff;
+    font-size: 0.75rem;
+    font-weight: 700;
+    padding: 5px 12px;
+    border-radius: 999px;
+  }
+
+  .playoff-pill {
+    background: var(--red-100);
+    color: var(--red-800);
+    font-size: 0.7rem;
+    font-weight: 700;
+    padding: 4px 10px;
+    border-radius: 999px;
+    text-transform: capitalize;
+  }
+
+  .handicap-note {
+    font-size: 0.72rem;
+    color: var(--red-700);
+    font-weight: 600;
+    line-height: 1.35;
+  }
+
+  .match-teams {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    gap: 8px;
+    align-items: center;
+    text-align: center;
+  }
+
+  .match-teams .team-side {
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: var(--gray-900);
+    line-height: 1.3;
+  }
+
+  .match-teams .vs {
+    font-size: 0.65rem;
+    font-weight: 800;
+    color: var(--gray-400);
+    letter-spacing: 0.05em;
+  }
+
+  .score-block {
+    background: var(--gray-50);
+    border-radius: 8px;
+    padding: 10px;
+  }
+
+  .btn-save {
+    width: 100%;
+    padding: 10px;
+    background: var(--red-600);
+    color: #fff;
+  }
+
+  .btn-save:hover:not(:disabled) {
+    background: var(--red-700);
+  }
+
+  .match-pending {
+    padding: 20px;
+    text-align: center;
+    color: var(--gray-500);
+    font-size: 0.9rem;
+    background: var(--gray-50);
+    border-radius: var(--radius-sm);
+    border: 1px dashed var(--gray-200);
+  }
+
+  .section-card {
+    padding: 0;
+    overflow: hidden;
+    box-shadow: var(--shadow-sm);
+  }
+
+  .section-card > summary {
+    list-style: none;
+    cursor: pointer;
+    padding: 18px 22px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    user-select: none;
+    background: linear-gradient(180deg, #fff 0%, var(--red-50) 100%);
+    transition: background 0.15s;
+  }
+
+  .section-card > summary:hover {
+    background: #fff;
+  }
+
+  .section-card > summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .section-card > summary::after {
+    content: "▼";
+    font-size: 12px;
+    color: #b91c1c;
+    transition: transform 0.2s ease;
+  }
+
+  .section-card:not([open]) > summary::after {
+    transform: rotate(-90deg);
+  }
+
+  .section-card > summary h2 {
+    margin: 0;
+    font-size: 18px;
+  }
+
+  .section-body {
+    padding: 0 24px 24px;
+    border-top: 1px solid #fecdd3;
+  }
+
+  .section-count {
+    font-size: 12px;
+    color: #6b7280;
+    font-weight: normal;
+  }
+
+  .rules-panel {
+    margin: 0 0 8px;
+    border: 1px solid var(--red-200);
+    border-radius: var(--radius-sm);
+    background: #fff;
+    overflow: hidden;
+  }
+
+  .rules-panel > summary {
+    list-style: none;
+    cursor: pointer;
+    padding: 14px 18px;
+    font-weight: 600;
+    color: var(--red-800);
+    font-size: 0.875rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    user-select: none;
+  }
+
+  .rules-panel > summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .rules-panel > summary::after {
+    content: "▼";
+    font-size: 11px;
+    color: #b91c1c;
+    transition: transform 0.2s ease;
+  }
+
+  .rules-panel:not([open]) > summary::after {
+    transform: rotate(-90deg);
+  }
+
+  .rules-body {
+    padding: 0 18px 18px;
+    border-top: 1px solid #fecdd3;
+  }
+
+  .rules-section {
+    margin-top: 16px;
+  }
+
+  .rules-section:first-child {
+    margin-top: 14px;
+  }
+
+  .rules-section h3 {
+    margin: 0 0 8px;
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: #b91c1c;
+  }
+
+  .rules-section p,
+  .rules-section li {
+    margin: 0 0 6px;
+    font-size: 13px;
+    color: #374151;
+    line-height: 1.55;
+  }
+
+  .rules-section ul,
+  .rules-section ol {
+    margin: 0;
+    padding-left: 20px;
+  }
+
+  .rules-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+    margin-top: 4px;
+  }
+
+  .rules-table th,
+  .rules-table td {
+    border: 1px solid #fecdd3;
+    padding: 8px 10px;
+    text-align: left;
+    vertical-align: top;
+  }
+
+  .rules-table th {
+    background: #fee2e2;
+    color: #991b1b;
+    font-weight: 600;
+    width: 28%;
+  }
+
+  .rules-table code {
+    font-size: 12px;
+    background: #f3f4f6;
+    padding: 1px 5px;
+    border-radius: 4px;
+  }
+
+  .set-row {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    margin-top: 6px;
+    flex-wrap: wrap;
+  }
+
+  .set-row:first-child { margin-top: 0; }
+
+  .set-row label {
+    font-size: 0.72rem;
+    font-weight: 600;
+    color: var(--gray-500);
+    min-width: 40px;
+    text-transform: uppercase;
+  }
+
+  .set-row input {
+    width: 64px;
+    padding: 8px;
+    border: 1px solid var(--gray-200);
+    border-radius: 8px;
+    font-family: inherit;
+    font-size: 0.9rem;
+    text-align: center;
+  }
+
+  .set-row input:focus {
+    outline: none;
+    border-color: var(--red-300);
+    box-shadow: 0 0 0 2px rgba(244, 63, 94, 0.12);
+  }
+
+  button.btn-add-set {
+    background: #fff;
+    color: var(--red-700);
+    border: 1px dashed var(--red-300);
+    font-size: 0.75rem;
+    padding: 6px 12px;
+    margin-top: 8px;
+    width: 100%;
+  }
+
+  button.btn-add-set:hover:not(:disabled) {
+    background: var(--red-50);
+  }
+
+  .info-tip {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+  }
+
+  .info-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: #fee2e2;
+    color: #b91c1c;
+    font-size: 12px;
+    font-weight: bold;
+    font-style: italic;
+    cursor: help;
+    line-height: 1;
+    border: 1px solid #fca5a5;
+  }
+
+  .info-tooltip {
+    display: none;
+    position: absolute;
+    left: 0;
+    top: calc(100% + 8px);
+    z-index: 50;
+    width: min(340px, 90vw);
+    padding: 12px 14px;
+    background: #fff;
+    border: 1px solid #fecdd3;
+    border-radius: 10px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+    font-size: 12px;
+    color: #374151;
+    line-height: 1.45;
+    font-weight: normal;
+    text-align: left;
+  }
+
+  .info-tooltip p {
+    margin: 0 0 8px;
+    color: #374151;
+    font-weight: normal;
+  }
+
+  .info-tooltip .rules-table {
+    font-size: 11px;
+  }
+
+  .info-tooltip .rules-table th {
+    font-size: 11px;
+    padding: 6px 8px;
+  }
+
+  .info-tooltip .rules-table td {
+    padding: 6px 8px;
+  }
+
+  .info-tip:hover .info-tooltip,
+  .info-tip:focus-within .info-tooltip {
+    display: block;
+  }
+
+  .standings-wrap {
+    margin-bottom: 24px;
+  }
+
+  .standings-wrap:last-child {
+    margin-bottom: 0;
+  }
+
+  .standings-court-title {
+    margin: 0 0 10px;
+    font-size: 14px;
+    font-weight: 700;
+    color: #991b1b;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .standings-court-title .court-tag {
+    background: #dc2626;
+    color: #fff;
+    font-size: 11px;
+    padding: 3px 10px;
+    border-radius: 999px;
+    font-weight: 600;
+  }
+
+  .standings-scroll {
+    overflow-x: auto;
+    border-radius: 10px;
+    border: 1px solid #fecdd3;
+    box-shadow: 0 1px 3px rgba(185, 28, 28, 0.06);
+  }
+
+  .standings-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+    background: #fff;
+    min-width: 520px;
+  }
+
+  .standings-table thead {
+    background: linear-gradient(180deg, #fef2f2 0%, #fee2e2 100%);
+  }
+
+  .standings-table th {
+    padding: 10px 12px;
+    text-align: center;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: #991b1b;
+    border-bottom: 2px solid #fca5a5;
+    white-space: nowrap;
+  }
+
+  .standings-table th.col-team {
+    text-align: left;
+    padding-left: 16px;
+  }
+
+  .standings-table td {
+    padding: 11px 12px;
+    text-align: center;
+    border-bottom: 1px solid #fce7e7;
+    color: #374151;
+  }
+
+  .standings-table tbody tr:last-child td {
+    border-bottom: none;
+  }
+
+  .standings-table tbody tr:hover {
+    background: #fffafb;
+  }
+
+  .standings-table td.col-team {
+    text-align: left;
+    padding-left: 16px;
+    font-weight: 600;
+    color: #111827;
+  }
+
+  .standings-table td.col-pos {
+    font-weight: 700;
+    color: #6b7280;
+    width: 48px;
+  }
+
+  .standings-table tr.rank-1 td {
+    background: linear-gradient(90deg, #fffbeb 0%, #fff 40%);
+  }
+
+  .standings-table tr.rank-2 td {
+    background: linear-gradient(90deg, #f9fafb 0%, #fff 40%);
+  }
+
+  .standings-table tr.rank-3 td {
+    background: linear-gradient(90deg, #fff7ed 0%, #fff 40%);
+  }
+
+  .standings-table tr.rank-1 td.col-pos {
+    color: #b45309;
+  }
+
+  .standings-table tr.rank-2 td.col-pos {
+    color: #6b7280;
+  }
+
+  .standings-table tr.rank-3 td.col-pos {
+    color: #c2410c;
+  }
+
+  .standings-table .col-pts {
+    font-weight: 800;
+    color: #b91c1c;
+    font-size: 14px;
+  }
+
+  .standings-table .diff-positive {
+    color: #15803d;
+    font-weight: 600;
+  }
+
+  .standings-table .diff-negative {
+    color: #b91c1c;
+    font-weight: 600;
+  }
+
+  .standings-table .diff-zero {
+    color: #9ca3af;
+  }
+
+  .standings-legend {
+    font-size: 11px;
+    color: #6b7280;
+    margin-top: 20px;
+    padding-top: 12px;
+    border-top: 1px solid #fecdd3;
+    line-height: 1.6;
   }
 </style>
 </head>
@@ -107,355 +1051,1213 @@
 <body>
 <div class="container">
 
-  <!-- HEADER -->
-  <div class="card">
-    <h1>
-      <img src="kbc.png" class="logo"/>
-      Knocklyon Internal Tournament
-    </h1>
+  <div class="card card-hero">
+    <div class="hero-top">
+      <img src="kbc.png" class="logo" alt="Knocklyon Badminton Club"/>
+      <h1>Knocklyon Internal Tournament</h1>
+    </div>
+    <p class="hero-sub">Upload players, generate balanced teams, run pool play on 3 courts, then playoffs.</p>
 
-    <div class="grid">
-      <div>
-        <p style="color:#dc2626;font-weight:bold;">Men</p>
-        <input type="file" id="menFile" accept=".csv">
-      </div>
+    <div class="stepper" id="steps"></div>
 
-      <div>
-        <p style="color:#dc2626;font-weight:bold;">Mixed</p>
-        <input type="file" id="mixedFile" accept=".csv">
-      </div>
+    <details class="rules-panel">
+      <summary>📋 Tournament rules &amp; pairing logic</summary>
+      <div class="rules-body">
 
-      <div>
-        <p style="color:#dc2626;font-weight:bold;">Ladies</p>
-        <input type="file" id="ladiesFile" accept=".csv">
+        <div class="rules-section">
+          <h3>1. Team pairing logic</h3>
+          <p>Teams are formed automatically as balanced doubles pairs:</p>
+          <ol>
+            <li><strong>Preferred:</strong> partners at least <strong>2 levels apart</strong> (e.g. Level 5 with Level 3).</li>
+            <li><strong>Next best:</strong> if not possible, partners <strong>1 level apart</strong>.</li>
+            <li><strong>Fallback:</strong> if still required, similar levels may be paired so <strong>everyone plays</strong>.</li>
+          </ol>
+          <p>Each team’s <strong>average level</strong> is shown after pairing. An odd number of players results in one bye.</p>
+        </div>
+
+        <div class="rules-section">
+          <h3>2. Pools &amp; courts</h3>
+          <ul>
+            <li>Teams are split into <strong>3 pools</strong>, one per court (Courts 1, 2, and 3).</li>
+            <li>Pools are balanced by overall team strength (snake draft).</li>
+            <li>Each pool plays a round-robin; scores feed the standings and playoffs.</li>
+          </ul>
+        </div>
+
+        <div class="rules-section">
+          <h3>3. Match handicaps</h3>
+          <p>Starting points go to the weaker side based on <strong>average team level</strong>:</p>
+          <ul>
+            <li><strong>0.5</strong> level difference → <strong>+2 points</strong></li>
+            <li><strong>1.0</strong> level difference (or more) → <strong>+3 points</strong></li>
+          </ul>
+          <p><strong>Mixed pair vs two men:</strong></p>
+          <ul>
+            <li>Same average level → mixed pair <strong>+2</strong></li>
+            <li>Mixed pair lower average → mixed pair <strong>+3</strong></li>
+            <li>Mixed pair higher average → men’s pair <strong>+1</strong></li>
+          </ul>
+          <p>Each match is scored as <strong>1 set by default</strong>. Use <strong>+ Add set</strong> on a match to record 2 or 3 sets if needed.</p>
+        </div>
+
+        <div class="rules-section">
+          <h3>4. Playoffs</h3>
+          <p>After pool play: the <strong>3 pool winners</strong> plus the <strong>best runner-up</strong> advance to semifinals (1 vs 4, 2 vs 3), then the final.</p>
+        </div>
+
       </div>
+    </details>
+
+    <div class="upload-block">
+      <div class="upload-label">
+        <p>Upload players list</p>
+        <span class="info-tip">
+          <span class="info-icon" title="CSV format">i</span>
+          <span class="info-tooltip">
+            <p>One CSV row per player. Header row is optional.</p>
+            <table class="rules-table">
+              <thead>
+                <tr>
+                  <th>Column</th>
+                  <th>Description</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><code>name</code></td>
+                  <td>Player name</td>
+                </tr>
+                <tr>
+                  <td><code>gender</code></td>
+                  <td><code>M</code> or <code>F</code> (mixed vs men handicaps)</td>
+                </tr>
+                <tr>
+                  <td><code>level</code></td>
+                  <td><code>1</code>–<code>5</code> (beginner to advanced)</td>
+                </tr>
+                <tr>
+                  <td><code>pref</code></td>
+                  <td>Optional, e.g. <code>mixed</code></td>
+                </tr>
+              </tbody>
+            </table>
+            <p class="hint" style="margin:8px 0 0;">Example: <code>Alex,M,4,mixed</code></p>
+          </span>
+        </span>
+      </div>
+      <label class="file-drop" for="playersFile">
+        <span class="file-drop-icon">📂</span>
+        <span class="file-drop-title">Choose CSV file</span>
+        <span class="file-drop-hint">or drag &amp; drop here</span>
+      </label>
+      <input type="file" id="playersFile" class="file-input-hidden" accept=".csv">
+      <div class="players-loaded" id="playersCount"></div>
     </div>
 
-    <br/>
-
-    <button onclick="generateTeams()">Generate Teams</button>
-    <button class="secondary" onclick="generateFixtures()">Generate Fixtures</button>
+    <p class="action-section-title">Tournament setup</p>
+    <div class="action-grid">
+      <button type="button" class="action-btn" onclick="generateTeams()">
+        <span class="action-num">1</span>
+        <span class="action-text">Generate teams</span>
+      </button>
+      <button type="button" class="action-btn" onclick="assignPools()" id="btnPools" disabled>
+        <span class="action-num">2</span>
+        <span class="action-text">Create pools</span>
+      </button>
+      <button type="button" class="action-btn" onclick="generatePoolFixtures()" id="btnPoolFx" disabled>
+        <span class="action-num">3</span>
+        <span class="action-text">Pool fixtures</span>
+      </button>
+      <button type="button" class="action-btn" onclick="generatePlayoffs()" id="btnPlayoffs" disabled>
+        <span class="action-num">4</span>
+        <span class="action-text">Playoffs</span>
+      </button>
+    </div>
+    <button type="button" class="btn-reset" onclick="resetTournament()">Reset tournament</button>
   </div>
 
-  <div class="card" id="leaderboardCard" style="display:none;">
-    <h2>Leaderboard</h2>
-    <div id="leaderboard"></div>
-  </div>
+  <details class="card section-card" id="teamsCard" style="display:none;" open>
+    <summary><h2>👥 Teams</h2><span class="section-count" id="teamsCount"></span></summary>
+    <div class="section-body">
+      <div id="teamsList"></div>
+      <div id="unpaired"></div>
+    </div>
+  </details>
 
-  <div class="card" id="fixturesCard" style="display:none;">
-    <h2>Fixtures</h2>
-    <div id="fixtures"></div>
-  </div>
+  <details class="card section-card" id="poolsCard" style="display:none;" open>
+    <summary><h2>🏸 Pools</h2><span class="section-count" id="poolsCount"></span></summary>
+    <div class="section-body"><div id="poolsList"></div></div>
+  </details>
+
+  <details class="card section-card" id="leaderboardCard" style="display:none;" open>
+    <summary><h2>📊 Points table</h2></summary>
+    <div class="section-body"><div id="leaderboard"></div></div>
+  </details>
+
+  <details class="card section-card" id="fixturesCard" style="display:none;" open>
+    <summary><h2>🎯 Pool matches</h2><span class="section-count" id="fixturesCount"></span></summary>
+    <div class="section-body"><div id="fixtures"></div></div>
+  </details>
+
+  <details class="card section-card" id="playoffsCard" style="display:none;" open>
+    <summary><h2>🏆 Playoffs</h2></summary>
+    <div class="section-body"><div id="playoffs"></div></div>
+  </details>
 
 </div>
 
 <script>
+/* ========== CONFIG ========== */
+const IDEAL_LEVEL_GAP = 2; // preferred partner gap (falls back to 1, then 0)
+const NUM_POOLS = 3;
+const DEFAULT_SETS = 1;
+const MAX_SETS = 3;
+const STORAGE_KEY = "tournamentState_v4";
 
-/* ---------------- STATE ---------------- */
-let menFile = [];
-let mixedFile = [];
-let ladiesFile = [];
-
+/* ========== STATE ========== */
+let players = [];
 let teams = [];
-let fixtures = [];
+let unpairedPlayers = [];
+let pairingWarnings = [];
+let pools = [[], [], []];
+let poolFixtures = [];
+let playoffMatches = [];
 let matchScores = {};
-let matchHistory = new Set();
+let phase = "setup"; // setup | teams | pools | pool_play | playoffs
 
-/* ---------------- STORAGE ---------------- */
-const STORAGE_KEY = "tournamentState";
-
-function saveState(){
+/* ========== PERSISTENCE ========== */
+function saveState() {
   localStorage.setItem(STORAGE_KEY, JSON.stringify({
-    menFile,
-    mixedFile,
-    ladiesFile,
-    teams,
-    fixtures,
-    matchScores,
-    matchHistory: Array.from(matchHistory)
+    players,
+    teams, unpairedPlayers, pairingWarnings, pools, poolFixtures, playoffMatches,
+    matchScores, phase
   }));
 }
 
-function loadState(){
-  const data = localStorage.getItem(STORAGE_KEY);
-  if(!data) return;
-
-  const s = JSON.parse(data);
-
-  menFile = s.menFile || [];
-  mixedFile = s.mixedFile || [];
-  ladiesFile = s.ladiesFile || [];
-
-  teams = s.teams || [];
-  fixtures = s.fixtures || [];
-  matchScores = s.matchScores || {};
-  matchHistory = new Set(s.matchHistory || []);
-
-  render();
+function loadState() {
+  const raw = localStorage.getItem(STORAGE_KEY);
+  if (!raw) return;
+  try {
+    const s = JSON.parse(raw);
+    players = s.players || [
+      ...(s.menFile || []),
+      ...(s.mixedFile || []),
+      ...(s.ladiesFile || [])
+    ];
+    teams = (s.teams || []).map(t => ({
+      ...t,
+      pairGap: t.pairGap ?? 2,
+      pairTier: t.pairTier || "ideal"
+    }));
+    unpairedPlayers = s.unpairedPlayers || [];
+    pairingWarnings = s.pairingWarnings || [];
+    pools = s.pools || [[], [], []];
+    poolFixtures = s.poolFixtures || [];
+    playoffMatches = s.playoffMatches || [];
+    matchScores = migrateAllMatchScores(s.matchScores || {});
+    phase = s.phase || "setup";
+    render();
+  } catch (e) {
+    console.warn("Could not load saved state", e);
+  }
 }
 
-loadState();
-
-/* ---------------- CSV ---------------- */
-function parseCSV(text, group){
+/* ========== CSV ========== */
+function parseCSV(text, group) {
   return text.split("\n")
-    .map(l=>l.trim())
+    .map(l => l.trim())
     .filter(Boolean)
-    .map((line,i)=>{
-      const [name,gender,level,pref]=line.split(",").map(x=>x?.trim());
+    .filter((line, i) => {
+      const lower = line.toLowerCase();
+      return !(i === 0 && (lower.startsWith("name") || lower.startsWith("player")));
+    })
+    .map((line, i) => {
+      const [name, gender, level, pref] = line.split(",").map(x => x?.trim());
+      const lvl = Math.min(5, Math.max(1, parseInt(level, 10) || 0));
       return {
-        id: group+"_"+i,
-        name,
-        gender,
-        level: parseInt(level)||0,
-        pref: pref||"mixed",
+        id: `${group}_${i}_${name?.replace(/\s/g, "_") || i}`,
+        name: name || "Unknown",
+        gender: gender || "",
+        level: lvl,
+        pref: (pref || "mixed").toLowerCase(),
         group
       };
-    });
+    })
+    .filter(p => p.level >= 1 && p.level <= 5);
 }
 
-/* ---------------- FILES ---------------- */
-function handleFile(file,setter,group){
-  if(!file) return;
-  const reader=new FileReader();
-  reader.onload=(e)=>{
-    setter(parseCSV(e.target.result,group));
+function handleFile(file, setter, group) {
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = (e) => {
+    setter(parseCSV(e.target.result, group));
+    phase = "setup";
+    teams = [];
+    pools = [[], [], []];
+    poolFixtures = [];
+    playoffMatches = [];
+    matchScores = {};
     saveState();
+    render();
   };
   reader.readAsText(file);
 }
 
-document.getElementById("menFile").onchange=e=>
-  handleFile(e.target.files[0],d=>menFile=d,"men");
+document.getElementById("playersFile").onchange = e => {
+  handleFile(e.target.files[0], d => { players = d; }, "players");
+  updatePlayersCountUI();
+};
 
-document.getElementById("mixedFile").onchange=e=>
-  handleFile(e.target.files[0],d=>mixedFile=d,"mixed");
-
-document.getElementById("ladiesFile").onchange=e=>
-  handleFile(e.target.files[0],d=>ladiesFile=d,"ladies");
-
-/* ---------------- TEAMS ---------------- */
-function getAllPlayers(){
-  return [...menFile,...mixedFile,...ladiesFile];
+function getAllPlayers() {
+  return players;
 }
 
-function generateTeams(){
-  const all=getAllPlayers();
-  const sorted=[...all].sort((a,b)=>b.level-a.level);
-
-  let l=0,r=sorted.length-1;
-  teams=[];
-
-  while(l<r){
-    teams.push({
-      id:`T${l}-${r}`,
-      team:[sorted[l],sorted[r]],
-      avgLevel:(sorted[l].level+sorted[r].level)/2
-    });
-    l++;r--;
+/* ========== UTILS ========== */
+function shuffle(arr) {
+  const a = [...arr];
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
   }
-
-  matchHistory=new Set();
-  fixtures=[];
-  matchScores={};
-
-  saveState();
-  render();
+  return a;
 }
 
-/* ---------------- FIXTURES ---------------- */
-function getHandicap(a,b){
-  const diff=b.avgLevel-a.avgLevel;
-  if(Math.abs(diff)<0.75) return 0;
-  if(Math.abs(diff)<1.5) return diff>0?-1:1;
-  return diff>0?-2:2;
+function levelGap(a, b) {
+  return Math.abs(a.level - b.level);
 }
 
-function generateFixtures(){
-  if(!teams.length) return;
-
-  fixtures=[];
-
-  for(let r=0;r<8;r++){
-    const sorted=[...teams].sort((a,b)=>
-      (getStats()[b.id]?.points||0)-(getStats()[a.id]?.points||0)
-    );
-
-    const used=new Set();
-    const round=[];
-
-    for(let i=0;i<sorted.length&&round.length<3;i++){
-      const t1=sorted[i];
-      if(used.has(t1.id)) continue;
-
-      let opponent=null;
-
-      for(let j=i+1;j<sorted.length;j++){
-        const t2=sorted[j];
-        const key=[t1.id,t2.id].sort().join("-");
-        if(!used.has(t2.id)&&!matchHistory.has(key)){
-          opponent=t2;
-          matchHistory.add(key);
-          break;
-        }
-      }
-
-      if(!opponent) continue;
-
-      used.add(t1.id);
-      used.add(opponent.id);
-
-      round.push({
-        id:`${r}-${round.length}`,
-        match:[t1,opponent],
-        handicap:getHandicap(t1,opponent)
-      });
-    }
-
-    if(round.length) fixtures.push(round);
-  }
-
-  saveState();
-  render();
+function pairTierFromGap(gap) {
+  if (gap >= 2) return "ideal";
+  if (gap === 1) return "fair";
+  return "fallback";
 }
 
-/* ---------------- SCORE ---------------- */
-function updateScore(id,f,v){
-  if(!matchScores[id]) matchScores[id]={};
-  matchScores[id][f]=Number(v)||0;
-  saveState();
+function isMale(p) {
+  const g = (p.gender || "").toUpperCase();
+  return g === "M" || g === "MALE";
 }
 
-function computeStats(s){
-  const a1=s.a1||0,b1=s.b1||0,a2=s.a2||0,b2=s.b2||0;
+function isFemale(p) {
+  const g = (p.gender || "").toUpperCase();
+  return g === "F" || g === "FEMALE";
+}
 
-  const setsA=(a1>b1?1:0)+(a2>b2?1:0);
-  const setsB=2-setsA;
+/** Man + woman on the same side */
+function isMixedDoublesTeam(team) {
+  const [a, b] = team.team;
+  return (isMale(a) && isFemale(b)) || (isFemale(a) && isMale(b));
+}
 
-  const diff=(a1-b1)+(a2-b2);
+/** Both players male */
+function isAllMenTeam(team) {
+  const [a, b] = team.team;
+  return isMale(a) && isMale(b);
+}
 
+function teamStrength(pair) {
+  return pair[0].level + pair[1].level;
+}
+
+function teamLabel(t) {
+  const p = t.team || t.players || t;
+  return `${p[0].name} & ${p[1].name}`;
+}
+
+function formatAvgLevel(avg) {
+  if (avg == null) return "—";
+  return Number.isInteger(avg) ? String(avg) : avg.toFixed(1);
+}
+
+function teamTierBadge(t) {
+  if (t.pairTier === "ideal") return "";
+  const label = t.pairTier === "fair" ? "gap 1" : "similar levels";
+  return `<span class="badge">${label}</span>`;
+}
+
+function getPairGap(team) {
+  if (team.pairGap != null) return team.pairGap;
+  return team.pairTier === "fair" ? 1 : team.pairTier === "fallback" ? 0 : 2;
+}
+
+function makeTeam(p, q) {
+  const gap = levelGap(p, q);
+  const sum = p.level + q.level;
   return {
-    A:{points:setsA,setsWon:setsA,setsLost:setsB,diff},
-    B:{points:setsB,setsWon:setsB,setsLost:setsA,diff:-diff}
+    id: `T_${p.id}_${q.id}`,
+    team: [p, q],
+    sumLevel: sum,
+    avgLevel: sum / 2,
+    pairGap: gap,
+    pairTier: pairTierFromGap(gap)
   };
 }
 
-/* ---------------- FIX: ALWAYS FRESH STATS ---------------- */
-function getStats(){
-  const stats={};
+function matchKey(idA, idB) {
+  return [idA, idB].sort().join("-");
+}
 
-  teams.forEach(t=>{
-    stats[t.id]={points:0,setsWon:0,setsLost:0,diff:0};
-  });
+/* ========== TEAM GENERATION ========== */
+/**
+ * Pair players in passes: gap≥2 (ideal), gap≥1 (fair), then any remaining (fallback).
+ * Everyone plays except with an odd player count (one bye).
+ */
+function pairPass(remaining, minGap, preferLargestGap) {
+  const used = new Set();
+  const newTeams = [];
+  const sorted = [...remaining].sort((a, b) => b.level - a.level || Math.random() - 0.5);
 
-  const all=fixtures.flat();
+  for (const p of sorted) {
+    if (used.has(p.id)) continue;
 
-  for(const id in matchScores){
-    const match=all.find(m=>m.id===id);
-    if(!match) continue;
+    const candidates = sorted
+      .filter(q => !used.has(q.id) && q.id !== p.id && levelGap(p, q) >= minGap)
+      .sort((a, b) => {
+        const ga = levelGap(p, a);
+        const gb = levelGap(p, b);
+        if (ga !== gb) return preferLargestGap ? gb - ga : ga - gb;
+        return Math.random() - 0.5;
+      });
 
-    const s=computeStats(matchScores[id]);
+    if (!candidates.length) continue;
 
-    const A=match.match[0].id;
-    const B=match.match[1].id;
-
-    if(!stats[A]||!stats[B]) continue;
-
-    stats[A].points+=s.A.points;
-    stats[A].setsWon+=s.A.setsWon;
-    stats[A].setsLost+=s.A.setsLost;
-    stats[A].diff+=s.A.diff;
-
-    stats[B].points+=s.B.points;
-    stats[B].setsWon+=s.B.setsWon;
-    stats[B].setsLost+=s.B.setsLost;
-    stats[B].diff+=s.B.diff;
+    const partner = candidates[0];
+    used.add(p.id);
+    used.add(partner.id);
+    newTeams.push(makeTeam(p, partner));
   }
 
+  return {
+    teams: newTeams,
+    remaining: remaining.filter(p => !used.has(p.id))
+  };
+}
+
+function generateTeams() {
+  const all = getAllPlayers();
+  if (all.length < 2) {
+    alert("Upload at least 2 players in the CSV.");
+    return;
+  }
+
+  teams = [];
+  unpairedPlayers = [];
+  pairingWarnings = [];
+
+  let remaining = shuffle(all);
+
+  for (const { minGap, preferLargestGap } of [
+    { minGap: 2, preferLargestGap: true },
+    { minGap: 1, preferLargestGap: true },
+    { minGap: 0, preferLargestGap: false }
+  ]) {
+    const { teams: paired, remaining: left } = pairPass(remaining, minGap, preferLargestGap);
+    teams.push(...paired);
+    remaining = left;
+  }
+
+  if (remaining.length === 1) {
+    unpairedPlayers = remaining;
+    pairingWarnings.push(
+      `${remaining[0].name} has a bye this round (odd number of players).`
+    );
+  } else if (remaining.length > 0) {
+    unpairedPlayers = remaining;
+    pairingWarnings.push(
+      `${remaining.length} player(s) could not be placed — check CSV data.`
+    );
+  }
+
+  const fallbackCount = teams.filter(t => t.pairTier === "fallback").length;
+  const fairCount = teams.filter(t => t.pairTier === "fair").length;
+  if (fallbackCount) {
+    pairingWarnings.push(
+      `${fallbackCount} team(s) use similar skill levels (gap 0) — matches vs stronger pairs use +2/+3 handicaps.`
+    );
+  }
+  if (fairCount) {
+    pairingWarnings.push(
+      `${fairCount} team(s) paired with 1-level gap (next-best balance).`
+    );
+  }
+
+  pools = [[], [], []];
+  poolFixtures = [];
+  playoffMatches = [];
+  matchScores = {};
+  phase = teams.length ? "teams" : "setup";
+
+  saveState();
+  render();
+}
+
+/* ========== POOL ASSIGNMENT (snake draft by strength) ========== */
+function assignPools() {
+  if (!teams.length) {
+    alert("Generate teams first.");
+    return;
+  }
+
+  const sorted = [...teams].sort((a, b) => b.sumLevel - a.sumLevel);
+  pools = [[], [], []];
+  const poolSums = [0, 0, 0];
+
+  sorted.forEach((t, i) => {
+    const round = Math.floor(i / NUM_POOLS);
+    const pos = i % NUM_POOLS;
+    const poolIdx = round % 2 === 0 ? pos : NUM_POOLS - 1 - pos;
+    pools[poolIdx].push(t.id);
+    t.pool = poolIdx;
+    poolSums[poolIdx] += t.sumLevel;
+  });
+
+  poolFixtures = [];
+  playoffMatches = [];
+  matchScores = {};
+  phase = "pools";
+
+  saveState();
+  render();
+}
+
+/* ========== ROUND ROBIN WITHIN POOL ========== */
+function roundRobinPairs(n) {
+  if (n < 2) return [];
+  const ids = [...Array(n).keys()];
+  if (n % 2 === 1) ids.push(-1); // bye slot
+
+  const rounds = [];
+  const m = ids.length;
+  for (let r = 0; r < m - 1; r++) {
+    const pairs = [];
+    for (let i = 0; i < m / 2; i++) {
+      const a = ids[i];
+      const b = ids[m - 1 - i];
+      if (a !== -1 && b !== -1) pairs.push([a, b]);
+    }
+    rounds.push(pairs);
+    ids.splice(1, 0, ids.pop());
+  }
+  return rounds;
+}
+
+function generatePoolFixtures() {
+  if (!pools.some(p => p.length)) {
+    alert("Create pools first.");
+    return;
+  }
+
+  poolFixtures = [];
+  // One court per pool: queue all pairings, then schedule slot r = one match per pool in parallel.
+  const poolQueues = pools.map((teamIds) => {
+    const queue = [];
+    if (teamIds.length < 2) return queue;
+
+    roundRobinPairs(teamIds.length).forEach((pairings) => {
+      pairings.forEach(([i, j]) => {
+        const t1 = teams.find(t => t.id === teamIds[i]);
+        const t2 = teams.find(t => t.id === teamIds[j]);
+        if (t1 && t2) queue.push([t1, t2]);
+      });
+    });
+    return queue;
+  });
+
+  const maxSlots = Math.max(...poolQueues.map(q => q.length), 0);
+
+  for (let r = 0; r < maxSlots; r++) {
+    poolQueues.forEach((queue, poolIdx) => {
+      const pair = queue[r];
+      if (!pair) return;
+      const [t1, t2] = pair;
+      poolFixtures.push({
+        id: `pool_${poolIdx}_r${r}_${matchKey(t1.id, t2.id)}`,
+        phase: "pool",
+        pool: poolIdx,
+        court: poolIdx + 1,
+        round: r,
+        globalRound: r,
+        match: [t1, t2],
+        handicap: 0,
+        handicapNotes: []
+      });
+      applyHandicapToMatch(poolFixtures[poolFixtures.length - 1], t1, t2);
+    });
+  }
+
+  playoffMatches = [];
+  matchScores = {};
+  phase = "pool_play";
+
+  saveState();
+  render();
+}
+
+/**
+ * Match handicap: signed int — negative = team A starts with points, positive = team B.
+ */
+function handicapFromLevelGap(absDiff) {
+  if (absDiff >= 1) return 3;
+  if (absDiff >= 0.5) return 2;
+  return 0;
+}
+
+/** Mixed (M+F) vs all-men: handicap from comparing average levels */
+function getMixedVsMenHandicap(mixedTeam, menTeam, mixedIsTeamA) {
+  const mixedAvg = mixedTeam.avgLevel;
+  const menAvg = menTeam.avgLevel;
+  const gap = menAvg - mixedAvg;
+
+  if (Math.abs(gap) < 0.001) {
+    return {
+      receiverIsA: mixedIsTeamA,
+      points: 2,
+      notes: ["Mixed vs men (same avg): +2 to mixed"]
+    };
+  }
+  if (gap > 0) {
+    return {
+      receiverIsA: mixedIsTeamA,
+      points: 3,
+      notes: ["Mixed vs men (mixed lower avg): +3 to mixed"]
+    };
+  }
+  return {
+    receiverIsA: !mixedIsTeamA,
+    points: 1,
+    notes: ["Mixed vs men (mixed higher avg): +1 to men"]
+  };
+}
+
+function getHandicap(a, b) {
+  if (isMixedDoublesTeam(a) && isAllMenTeam(b)) {
+    const h = getMixedVsMenHandicap(a, b, true);
+    const value = h.receiverIsA ? -h.points : h.points;
+    return { value, notes: h.notes };
+  }
+  if (isMixedDoublesTeam(b) && isAllMenTeam(a)) {
+    const h = getMixedVsMenHandicap(b, a, false);
+    const value = h.receiverIsA ? -h.points : h.points;
+    return { value, notes: h.notes };
+  }
+
+  const absDiff = Math.abs(a.avgLevel - b.avgLevel);
+  const points = handicapFromLevelGap(absDiff);
+
+  if (points === 0) {
+    return { value: 0, notes: ["No handicap"] };
+  }
+
+  const weakerIsA = a.avgLevel < b.avgLevel;
+  const gapLabel = absDiff >= 1 ? absDiff.toFixed(1) : "0.5";
+  return {
+    value: weakerIsA ? -points : points,
+    notes: [`Avg level gap ${gapLabel}: +${points}`]
+  };
+}
+
+function applyHandicapToMatch(matchObj, teamA, teamB) {
+  const h = getHandicap(teamA, teamB);
+  matchObj.handicap = h.value;
+  matchObj.handicapNotes = h.notes;
+}
+
+function refreshAllHandicaps() {
+  poolFixtures.forEach(m => {
+    if (m.match?.[0] && m.match?.[1]) applyHandicapToMatch(m, m.match[0], m.match[1]);
+  });
+  playoffMatches.forEach(m => {
+    if (m.match?.[0] && m.match?.[1] && !m.pending) applyHandicapToMatch(m, m.match[0], m.match[1]);
+  });
+}
+
+/* ========== PLAYOFFS ========== */
+function getPoolStandings(poolIdx) {
+  const ids = pools[poolIdx] || [];
+  const stats = getStatsForMatches(poolFixtures);
+
+  return ids
+    .map(id => ({ id, s: stats[id] || emptyStats() }))
+    .sort((a, b) => compareStats(a.s, b.s))
+    .map((row, i) => ({ ...row, rank: i + 1 }));
+}
+
+function compareStats(a, b) {
+  if (b.points !== a.points) return b.points - a.points;
+  if (b.diff !== a.diff) return b.diff - a.diff;
+  return b.setsWon - a.setsWon;
+}
+
+function emptyStats() {
+  return { points: 0, setsWon: 0, setsLost: 0, diff: 0 };
+}
+
+function generatePlayoffs() {
+  if (!poolFixtures.length) {
+    alert("Generate and play pool fixtures first (or at least generate them).");
+    return;
+  }
+
+  const poolWinners = [];
+  const poolRunners = [];
+
+  for (let p = 0; p < NUM_POOLS; p++) {
+    const standings = getPoolStandings(p);
+    if (standings[0]) poolWinners.push({ ...standings[0], pool: p, seedReason: `Pool ${String.fromCharCode(65 + p)} winner` });
+    if (standings[1]) poolRunners.push({ ...standings[1], pool: p, seedReason: `Pool ${String.fromCharCode(65 + p)} 2nd` });
+  }
+
+  if (poolWinners.length < 3) {
+    alert("Need 3 pools with at least one team each for playoffs.");
+    return;
+  }
+
+  poolWinners.sort((a, b) => compareStats(a.s, b.s));
+  poolRunners.sort((a, b) => compareStats(a.s, b.s));
+
+  const fourth = poolRunners[0];
+  if (!fourth) {
+    alert("Need at least one runner-up across pools for a 4-team semifinal.");
+    return;
+  }
+
+  // Seed 1–3: pool winners by record; seed 4: best runner-up
+  const seeds = [
+    { ...poolWinners[0], seed: 1 },
+    { ...poolWinners[1], seed: 2 },
+    { ...poolWinners[2], seed: 3 },
+    { ...fourth, seed: 4 }
+  ];
+
+  const t = id => teams.find(x => x.id === id);
+
+  playoffMatches = [
+    {
+      id: "sf1",
+      phase: "semifinal",
+      label: "Semifinal 1 (1 vs 4)",
+      court: 1,
+      match: [t(seeds[0].id), t(seeds[3].id)],
+      handicap: 0,
+      handicapNotes: []
+    },
+    {
+      id: "sf2",
+      phase: "semifinal",
+      label: "Semifinal 2 (2 vs 3)",
+      court: 2,
+      match: [t(seeds[1].id), t(seeds[2].id)],
+      handicap: 0,
+      handicapNotes: []
+    },
+    {
+      id: "final",
+      phase: "final",
+      label: "Final",
+      court: 1,
+      match: [null, null],
+      handicap: 0,
+      handicapNotes: [],
+      pending: true
+    }
+  ];
+
+  if (playoffMatches[0].match[0] && playoffMatches[0].match[1]) {
+    applyHandicapToMatch(playoffMatches[0], playoffMatches[0].match[0], playoffMatches[0].match[1]);
+  }
+  if (playoffMatches[1].match[0] && playoffMatches[1].match[1]) {
+    applyHandicapToMatch(playoffMatches[1], playoffMatches[1].match[0], playoffMatches[1].match[1]);
+  }
+
+  phase = "playoffs";
+  saveState();
+  render();
+}
+
+function resolveFinalists() {
+  const sf = playoffMatches.filter(m => m.phase === "semifinal");
+  const final = playoffMatches.find(m => m.phase === "final");
+  if (!final) return;
+
+  const winners = sf.map(m => {
+    const s = getMatchScore(m.id);
+    if (!hasMatchResult(s)) return null;
+    const st = computeStats(s);
+    if (st.A.points === st.B.points) return null;
+    return st.A.points > st.B.points ? m.match[0] : m.match[1];
+  });
+
+  if (winners[0] && winners[1]) {
+    final.match = [winners[0], winners[1]];
+    final.pending = false;
+    applyHandicapToMatch(final, winners[0], winners[1]);
+  }
+}
+
+/* ========== SCORING ========== */
+function emptySetScore() {
+  return { a: null, b: null };
+}
+
+function normalizeMatchScore(raw) {
+  if (raw?.sets && Array.isArray(raw.sets)) {
+    const numSets = Math.min(MAX_SETS, Math.max(DEFAULT_SETS, raw.numSets || raw.sets.length || DEFAULT_SETS));
+    const sets = raw.sets.slice(0, numSets).map(s => ({
+      a: s.a ?? null,
+      b: s.b ?? null
+    }));
+    while (sets.length < numSets) sets.push(emptySetScore());
+    return { numSets, sets };
+  }
+
+  const sets = [];
+  if (raw?.a1 != null || raw?.b1 != null) sets.push({ a: raw.a1 ?? null, b: raw.b1 ?? null });
+  if (raw?.a2 != null || raw?.b2 != null) sets.push({ a: raw.a2 ?? null, b: raw.b2 ?? null });
+
+  const numSets = Math.min(MAX_SETS, Math.max(DEFAULT_SETS, raw?.numSets || sets.length || DEFAULT_SETS));
+  while (sets.length < numSets) sets.push(emptySetScore());
+
+  return { numSets, sets: sets.slice(0, numSets) };
+}
+
+function migrateAllMatchScores(scores) {
+  return Object.fromEntries(
+    Object.entries(scores).map(([id, sc]) => [id, normalizeMatchScore(sc)])
+  );
+}
+
+function getMatchScore(matchId) {
+  if (!matchScores[matchId]) {
+    matchScores[matchId] = {
+      numSets: DEFAULT_SETS,
+      sets: [emptySetScore()]
+    };
+  }
+  matchScores[matchId] = normalizeMatchScore(matchScores[matchId]);
+  return matchScores[matchId];
+}
+
+function updateSetScore(matchId, setIndex, side, value) {
+  const s = getMatchScore(matchId);
+  if (!s.sets[setIndex]) s.sets[setIndex] = emptySetScore();
+  s.sets[setIndex][side] = value === "" ? null : Number(value);
+  saveState();
+}
+
+function addSet(matchId) {
+  const s = getMatchScore(matchId);
+  if (s.numSets >= MAX_SETS) return;
+  s.numSets += 1;
+  s.sets.push(emptySetScore());
+  saveState();
+  render();
+}
+
+function hasMatchResult(score) {
+  const s = normalizeMatchScore(score);
+  return s.sets.slice(0, s.numSets).some(set => set.a != null && set.b != null);
+}
+
+function computeStats(score) {
+  const s = normalizeMatchScore(score);
+  let setsA = 0;
+  let setsB = 0;
+  let diff = 0;
+
+  for (let i = 0; i < s.numSets; i++) {
+    const set = s.sets[i] || emptySetScore();
+    if (set.a == null || set.b == null) continue;
+    if (set.a > set.b) setsA++;
+    else if (set.b > set.a) setsB++;
+    diff += set.a - set.b;
+  }
+
+  return {
+    A: { points: setsA, setsWon: setsA, setsLost: setsB, diff },
+    B: { points: setsB, setsWon: setsB, setsLost: setsA, diff: -diff }
+  };
+}
+
+function getStatsForMatches(matchList) {
+  const stats = {};
+  teams.forEach(t => { stats[t.id] = emptyStats(); });
+
+  for (const m of matchList) {
+    const s = getMatchScore(m.id);
+    if (!hasMatchResult(s)) continue;
+    const r = computeStats(s);
+    const A = m.match[0].id;
+    const B = m.match[1].id;
+    if (!stats[A] || !stats[B]) continue;
+    ["points", "setsWon", "setsLost", "diff"].forEach(k => {
+      stats[A][k] += r.A[k];
+      stats[B][k] += r.B[k];
+    });
+  }
   return stats;
 }
 
-/* ---------------- RENDER ---------------- */
-function render(){
+function getStats() {
+  return getStatsForMatches(poolFixtures);
+}
 
-  const stats=getStats();
+function getTeamPoolRecord(teamId, poolIdx) {
+  let played = 0;
+  let won = 0;
+  let lost = 0;
 
-  const lb=document.getElementById("leaderboard");
+  poolFixtures
+    .filter(f => f.pool === poolIdx)
+    .forEach(m => {
+      const isA = m.match[0].id === teamId;
+      const isB = m.match[1].id === teamId;
+      if (!isA && !isB) return;
 
-  const sorted=teams.map(t=>({
-    ...t,
-    s:stats[t.id]||{points:0,setsWon:0,setsLost:0,diff:0}
-  })).sort((a,b)=>b.s.points-a.s.points);
+      const score = getMatchScore(m.id);
+      if (!hasMatchResult(score)) return;
 
-  if(sorted.length){
-    document.getElementById("leaderboardCard").style.display="block";
+      played++;
+      const result = computeStats(score);
+      const mine = isA ? result.A.points : result.B.points;
+      const theirs = isA ? result.B.points : result.A.points;
+      if (mine > theirs) won++;
+      else if (theirs > mine) lost++;
+    });
 
-    lb.innerHTML=sorted.map((t,i)=>
-      `<div class="row">
-        <span>${i+1}. ${t.team[0]?.name} & ${t.team[1]?.name}</span>
-        <span>P:${t.s.points} SW:${t.s.setsWon} SL:${t.s.setsLost} D:${t.s.diff}</span>
-      </div>`
-    ).join("");
+  return { played, won, lost };
+}
+
+function formatDiff(diff) {
+  if (diff > 0) return { text: `+${diff}`, cls: "diff-positive" };
+  if (diff < 0) return { text: String(diff), cls: "diff-negative" };
+  return { text: "0", cls: "diff-zero" };
+}
+
+function renderPointsTable(poolIdx, teamIds, stats) {
+  const rows = teamIds
+    .map(id => ({
+      id,
+      t: teams.find(x => x.id === id),
+      s: stats[id] || emptyStats(),
+      rec: getTeamPoolRecord(id, poolIdx)
+    }))
+    .sort((a, b) => compareStats(a.s, b.s));
+
+  const body = rows.map((r, i) => {
+    const rank = i + 1;
+    const diff = formatDiff(r.s.diff);
+    const rankClass = rank <= 3 ? `rank-${rank}` : "";
+
+    return `
+      <tr class="${rankClass}">
+        <td class="col-pos">${rank}</td>
+        <td class="col-team">${teamLabel(r.t)}</td>
+        <td>${r.rec.played}</td>
+        <td>${r.rec.won}</td>
+        <td>${r.rec.lost}</td>
+        <td>${r.s.setsWon}</td>
+        <td>${r.s.setsLost}</td>
+        <td class="${diff.cls}">${diff.text}</td>
+        <td class="col-pts">${r.s.points}</td>
+      </tr>`;
+  }).join("");
+
+  return `
+    <div class="standings-wrap">
+      <h3 class="standings-court-title">
+        <span class="court-tag">Court ${poolIdx + 1}</span>
+        Pool standings
+      </h3>
+      <div class="standings-scroll">
+        <table class="standings-table">
+          <thead>
+            <tr>
+              <th class="col-pos">#</th>
+              <th class="col-team">Team</th>
+              <th title="Matches played">Pld</th>
+              <th title="Matches won">W</th>
+              <th title="Matches lost">L</th>
+              <th title="Sets won">SW</th>
+              <th title="Sets lost">SL</th>
+              <th title="Set difference">+/−</th>
+              <th title="Points (sets won)">Pts</th>
+            </tr>
+          </thead>
+          <tbody>${body}</tbody>
+        </table>
+      </div>
+    </div>`;
+}
+
+/* ========== RENDER HELPERS ========== */
+function handicapLabel(m) {
+  if (!m.match || !m.match[0] || !m.match[1]) return "";
+  if (!m.handicap) {
+    return (m.handicapNotes && m.handicapNotes[0]) || "";
+  }
+  const weaker = m.handicap > 0 ? m.match[1] : m.match[0];
+  const pts = Math.abs(m.handicap);
+  const why = m.handicapNotes?.length ? ` · ${m.handicapNotes.join(", ")}` : "";
+  return `${teamLabel(weaker)} starts +${pts}${why}`;
+}
+
+function renderSetInputs(m) {
+  const s = getMatchScore(m.id);
+  const rows = [];
+
+  for (let i = 0; i < s.numSets; i++) {
+    const set = s.sets[i] || emptySetScore();
+    rows.push(`
+      <div class="set-row">
+        <label>Set ${i + 1}</label>
+        <input value="${set.a ?? ""}" placeholder="Team A"
+          oninput="updateSetScore('${m.id}',${i},'a',this.value)" aria-label="Team A set ${i + 1}">
+        <span>–</span>
+        <input value="${set.b ?? ""}" placeholder="Team B"
+          oninput="updateSetScore('${m.id}',${i},'b',this.value)" aria-label="Team B set ${i + 1}">
+      </div>`);
   }
 
-  const fx=document.getElementById("fixtures");
+  if (s.numSets < MAX_SETS) {
+    rows.push(`<button type="button" class="btn-add-set" onclick="addSet('${m.id}')">+ Add set</button>`);
+  }
 
-  if(fixtures.length){
-    document.getElementById("fixturesCard").style.display="block";
+  return rows.join("");
+}
 
-    fx.innerHTML=fixtures.map((r,i)=>
-      `<div>
-        <b style="color:#dc2626">Round ${i+1}</b>
+function renderMatchCard(m) {
+  const pending = m.pending && (!m.match[0] || !m.match[1]);
 
-        ${r.map(m=>{
-          const s=matchScores[m.id]||{};
+  if (pending) {
+    return `<div class="match-pending">Complete both semifinals to unlock the final.</div>`;
+  }
 
-          return `
-          <div class="match">
+  const isPool = m.phase === "pool";
+  const hcap = handicapLabel(m);
+  const header = isPool
+    ? `<div class="match-card-header"><span class="court-pill">Court ${m.court}</span></div>`
+    : `<div class="match-card-header">
+        <span class="playoff-pill">${m.label || m.phase}</span>
+        ${m.court ? `<span class="court-pill">Court ${m.court}</span>` : ""}
+      </div>`;
 
-            <div>
-              <b>${m.match[0].team[0].name} & ${m.match[0].team[1].name}</b>
-              vs
-              <b>${m.match[1].team[0].name} & ${m.match[1].team[1].name}</b>
+  return `
+    <div class="match-card">
+      ${header}
+      <div class="match-teams">
+        <div class="team-side">${teamLabel(m.match[0])}</div>
+        <div class="vs">VS</div>
+        <div class="team-side">${teamLabel(m.match[1])}</div>
+      </div>
+      ${hcap && hcap !== "No handicap" ? `<div class="handicap-note">${hcap}</div>` : ""}
+      <div class="score-block">${renderSetInputs(m)}</div>
+      <button type="button" class="btn-save" onclick="afterScoreSave()">Save scores</button>
+    </div>`;
+}
 
-              <span style="margin-left:10px;color:#dc2626;font-size:12px;font-weight:700">
-                ${
-                  m.handicap===0
-                    ? "No handicap"
-                    : m.handicap>0
-                      ? `${m.match[1].team[0].name} & ${m.match[1].team[1].name} +${m.handicap}`
-                      : `${m.match[0].team[0].name} & ${m.match[0].team[1].name} +${Math.abs(m.handicap)}`
-                }
-              </span>
-            </div>
+function afterScoreSave() {
+  if (phase === "playoffs") resolveFinalists();
+  saveState();
+  render();
+}
 
-            <div class="flex">
-              <input value="${s.a1??''}" placeholder="A1"
-                oninput="updateScore('${m.id}','a1',this.value)">
-              -
-              <input value="${s.b1??''}" placeholder="B1"
-                oninput="updateScore('${m.id}','b1',this.value)">
-            </div>
+function resetTournament() {
+  if (!confirm("Clear all teams, pools, scores, and fixtures?")) return;
+  players = [];
+  teams = [];
+  unpairedPlayers = [];
+  pairingWarnings = [];
+  pools = [[], [], []];
+  poolFixtures = [];
+  playoffMatches = [];
+  matchScores = {};
+  phase = "setup";
+  localStorage.removeItem(STORAGE_KEY);
+  document.getElementById("playersFile").value = "";
+  render();
+}
 
-            <div class="flex">
-              <input value="${s.a2??''}" placeholder="A2"
-                oninput="updateScore('${m.id}','a2',this.value)">
-              -
-              <input value="${s.b2??''}" placeholder="B2"
-                oninput="updateScore('${m.id}','b2',this.value)">
-            </div>
+function renderSteps() {
+  const steps = [
+    { key: "setup", label: "Upload" },
+    { key: "teams", label: "Teams" },
+    { key: "pools", label: "Pools" },
+    { key: "pool_play", label: "Play" },
+    { key: "playoffs", label: "Finals" }
+  ];
+  const order = steps.map(s => s.key);
+  const idx = order.indexOf(phase);
 
-            <button onclick='saveScore();render();'>
-              Save Score
-            </button>
+  document.getElementById("steps").innerHTML = steps.map((s, i) => {
+    let cls = "stepper-item";
+    if (i < idx) cls += " done";
+    if (i === idx) cls += " active";
+    const dot = i < idx ? "✓" : String(i + 1);
+    return `<div class="${cls}">
+      <div class="stepper-dot">${dot}</div>
+      <div class="stepper-label">${s.label}</div>
+    </div>`;
+  }).join("");
 
-          </div>`;
-        }).join("")}
+  document.getElementById("btnPools").disabled = !teams.length;
+  document.getElementById("btnPoolFx").disabled = !pools.some(p => p.length);
+  document.getElementById("btnPlayoffs").disabled = !poolFixtures.length;
+}
 
-      </div>`
-    ).join("");
+function updatePlayersCountUI() {
+  const el = document.getElementById("playersCount");
+  const title = document.querySelector(".file-drop-title");
+  if (players.length) {
+    el.textContent = `✓ ${players.length} players loaded`;
+    if (title) title.textContent = "Players list ready";
+  } else {
+    el.textContent = "";
+    if (title) title.textContent = "Choose CSV file";
   }
 }
+
+function render() {
+  refreshAllHandicaps();
+  renderSteps();
+
+  updatePlayersCountUI();
+
+  const teamsCard = document.getElementById("teamsCard");
+  const teamsList = document.getElementById("teamsList");
+  const unpairedEl = document.getElementById("unpaired");
+
+  if (teams.length) {
+    teamsCard.style.display = "block";
+    document.getElementById("teamsCount").textContent = `${teams.length} teams`;
+    teamsList.innerHTML = teams.map((t, i) =>
+      `<div class="team-item">
+        <span class="team-num">${String(i + 1).padStart(2, "0")}</span>
+        <div>
+          <div class="team-names">${teamLabel(t)} ${teamTierBadge(t)}</div>
+          <div class="team-meta">Avg ${formatAvgLevel(t.avgLevel)}${t.pool != null ? ` · Court ${t.pool + 1}` : ""}</div>
+        </div>
+      </div>`
+    ).join("");
+
+    let notices = "";
+    if (pairingWarnings.length) {
+      notices += pairingWarnings.map(w =>
+        `<div class="alert">${w}</div>`
+      ).join("");
+    }
+    if (unpairedPlayers.length) {
+      notices += `<div class="alert error"><b>Not playing:</b> ${unpairedPlayers.map(p => p.name).join(", ")}</div>`;
+    }
+    unpairedEl.innerHTML = notices;
+  } else {
+    teamsCard.style.display = "none";
+  }
+
+  const poolsCard = document.getElementById("poolsCard");
+  if (pools.some(p => p.length)) {
+    poolsCard.style.display = "block";
+    document.getElementById("poolsCount").textContent = "3 courts";
+    document.getElementById("poolsList").innerHTML =
+      `<div class="courts-grid">${pools.map((ids, pi) => {
+        const court = pi + 1;
+        return `<div class="court-card">
+          <div class="court-card-head">
+            <span class="court-tag">Court ${court}</span>
+            <span style="font-size:0.75rem;color:var(--gray-500)">${ids.length} teams</span>
+          </div>
+          ${ids.map((id, i) => {
+            const t = teams.find(x => x.id === id);
+            return t ? `<div class="court-team-row"><span>${i + 1}</span><span>${teamLabel(t)}</span></div>` : "";
+          }).join("")}
+        </div>`;
+      }).join("")}</div>`;
+  } else {
+    poolsCard.style.display = "none";
+  }
+
+  const stats = getStats();
+  const lbCard = document.getElementById("leaderboardCard");
+  if (teams.length && pools.some(p => p.length)) {
+    lbCard.style.display = "block";
+    document.getElementById("leaderboard").innerHTML =
+      pools.map((ids, pi) => renderPointsTable(pi, ids, stats)).join("") +
+      `<p class="standings-legend">
+        <strong>Pld</strong> = played · <strong>W</strong> / <strong>L</strong> = matches won / lost ·
+        <strong>SW</strong> / <strong>SL</strong> = sets won / lost · <strong>+/−</strong> = set difference ·
+        <strong>Pts</strong> = total sets won (ranked first)
+      </p>`;
+  } else {
+    lbCard.style.display = "none";
+  }
+
+  const fxCard = document.getElementById("fixturesCard");
+  if (poolFixtures.length) {
+    fxCard.style.display = "block";
+    document.getElementById("fixturesCount").textContent = `${poolFixtures.length} matches`;
+    const byRound = {};
+    poolFixtures.forEach(f => {
+      const k = f.globalRound ?? f.round;
+      if (!byRound[k]) byRound[k] = [];
+      byRound[k].push(f);
+    });
+
+    document.getElementById("fixtures").innerHTML = Object.keys(byRound)
+      .sort((a, b) => Number(a) - Number(b))
+      .map(r => {
+        const matches = byRound[r];
+        return `<div class="round-block">
+          <div class="round-header">
+            <h4>Round ${Number(r) + 1}</h4>
+            <span class="hint">3 courts in parallel</span>
+          </div>
+          <div class="matches-grid">
+            ${matches.sort((a, b) => a.pool - b.pool).map(renderMatchCard).join("")}
+          </div>
+        </div>`;
+      }).join("");
+  } else {
+    fxCard.style.display = "none";
+  }
+
+  if (phase === "playoffs") resolveFinalists();
+
+  const poCard = document.getElementById("playoffsCard");
+  if (playoffMatches.length) {
+    poCard.style.display = "block";
+    document.getElementById("playoffs").innerHTML =
+      `<div class="matches-grid">${playoffMatches.map(renderMatchCard).join("")}</div>`;
+  } else {
+    poCard.style.display = "none";
+  }
+}
+
+(function initUploadDrop() {
+  const drop = document.querySelector(".file-drop");
+  const input = document.getElementById("playersFile");
+  if (!drop || !input) return;
+
+  ["dragenter", "dragover"].forEach(ev => {
+    drop.addEventListener(ev, e => {
+      e.preventDefault();
+      drop.classList.add("dragover");
+    });
+  });
+  ["dragleave", "drop"].forEach(ev => {
+    drop.addEventListener(ev, e => {
+      e.preventDefault();
+      drop.classList.remove("dragover");
+    });
+  });
+  drop.addEventListener("drop", e => {
+    const file = e.dataTransfer?.files?.[0];
+    if (file) {
+      input.files = e.dataTransfer.files;
+      handleFile(file, d => { players = d; }, "players");
+      updatePlayersCountUI();
+    }
+  });
+})();
+
+loadState();
 </script>
 
 </body>
