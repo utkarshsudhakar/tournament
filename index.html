@@ -1174,6 +1174,212 @@
   .playoff-section-title:first-of-type {
     margin-top: 0;
   }
+
+  .archive-banner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+    padding: 14px 18px;
+    margin-bottom: 20px;
+    background: linear-gradient(90deg, #fef3c7 0%, #fffbeb 100%);
+    border: 1px solid #fcd34d;
+    border-radius: var(--radius-sm);
+    font-size: 0.9rem;
+    color: #92400e;
+  }
+
+  .archive-banner strong {
+    color: #78350f;
+  }
+
+  .btn-exit-archive {
+    padding: 8px 14px;
+    font-size: 0.8rem;
+    background: #fff;
+    color: #92400e;
+    border: 1px solid #fcd34d;
+  }
+
+  .archive-toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 16px;
+    align-items: center;
+  }
+
+  .btn-archive-save {
+    padding: 10px 16px;
+    background: var(--green-700);
+    color: #fff;
+    font-size: 0.85rem;
+  }
+
+  .btn-archive-save:hover:not(:disabled) {
+    background: #166534;
+  }
+
+  .archive-name-input {
+    flex: 1;
+    min-width: 180px;
+    padding: 10px 12px;
+    border: 1px solid var(--gray-200);
+    border-radius: 8px;
+    font-family: inherit;
+    font-size: 0.9rem;
+  }
+
+  .archive-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .archive-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 12px;
+    padding: 14px 16px;
+    background: var(--gray-50);
+    border: 1px solid var(--gray-200);
+    border-radius: var(--radius-sm);
+    transition: border-color 0.15s;
+  }
+
+  .archive-item:hover {
+    border-color: var(--red-200);
+  }
+
+  .archive-item-title {
+    font-weight: 700;
+    color: var(--gray-900);
+    font-size: 0.95rem;
+  }
+
+  .archive-item-meta {
+    font-size: 0.78rem;
+    color: var(--gray-500);
+    margin-top: 4px;
+    line-height: 1.5;
+  }
+
+  .archive-item-champion {
+    color: var(--red-700);
+    font-weight: 600;
+  }
+
+  .archive-item-actions {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+
+  .btn-archive-load {
+    padding: 8px 14px;
+    font-size: 0.8rem;
+    background: var(--red-600);
+    color: #fff;
+  }
+
+  .btn-archive-delete {
+    padding: 8px 14px;
+    font-size: 0.8rem;
+    background: #fff;
+    color: var(--gray-700);
+    border: 1px solid var(--gray-200);
+  }
+
+  .archive-transfer-bar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 16px;
+    padding: 14px;
+    background: #eff6ff;
+    border: 1px solid #bfdbfe;
+    border-radius: var(--radius-sm);
+    align-items: center;
+  }
+
+  .btn-archive-download {
+    padding: 8px 14px;
+    font-size: 0.8rem;
+    background: #1d4ed8;
+    color: #fff;
+  }
+
+  .btn-archive-upload {
+    padding: 8px 14px;
+    font-size: 0.8rem;
+    background: #fff;
+    color: #1d4ed8;
+    border: 1px solid #93c5fd;
+    cursor: pointer;
+    border-radius: var(--radius-sm);
+    font-family: inherit;
+    font-weight: 600;
+  }
+
+  .btn-archive-dl-one {
+    padding: 8px 14px;
+    font-size: 0.8rem;
+    background: #fff;
+    color: #1d4ed8;
+    border: 1px solid #93c5fd;
+  }
+
+  .archive-transfer-hint {
+    width: 100%;
+    font-size: 0.78rem;
+    color: #1e40af;
+    line-height: 1.5;
+    margin: 0;
+  }
+
+  .champion-banner {
+    text-align: center;
+    padding: 24px;
+    margin-bottom: 20px;
+    background: linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%);
+    border: 1px solid #fcd34d;
+    border-radius: var(--radius);
+  }
+
+  .champion-banner .trophy {
+    font-size: 2rem;
+    line-height: 1;
+    margin-bottom: 8px;
+  }
+
+  .champion-banner h3 {
+    margin: 0 0 6px;
+    font-size: 1.25rem;
+    color: var(--red-800);
+  }
+
+  .champion-banner p {
+    margin: 0;
+    font-size: 0.9rem;
+    color: var(--gray-600);
+  }
+
+  .view-mode .match-card input,
+  .view-mode .btn-save,
+  .view-mode .btn-add-set {
+    pointer-events: none;
+    opacity: 0.85;
+  }
+
+  .view-mode .action-grid,
+  .view-mode .upload-block,
+  .view-mode .file-drop {
+    opacity: 0.5;
+    pointer-events: none;
+  }
 </style>
 </head>
 
@@ -1236,6 +1442,11 @@
             <li><strong>Semifinals</strong> — top 4 (3 pool winners + best 2nd) → two semis → final (~3 matches).</li>
             <li><strong>Super 6</strong> — top <strong>2 from each pool</strong> (6 teams) → two groups of 3 (Courts 1 &amp; 2) → pool winners meet in the final (~7 matches).</li>
           </ul>
+        </div>
+
+        <div class="rules-section">
+          <h3>5. Save &amp; review results</h3>
+          <p>When the <strong>final</strong> is complete, use <strong>Save final result</strong>. Use <strong>Download</strong> / <strong>Upload</strong> in Saved results to move results to another device.</p>
         </div>
 
       </div>
@@ -1307,7 +1518,30 @@
       </button>
     </div>
     <button type="button" class="btn-reset" onclick="resetTournament()">Reset tournament</button>
+
+    <div class="archive-toolbar" id="saveResultToolbar" style="display:none;">
+      <input type="text" class="archive-name-input" id="archiveNameInput" placeholder="Tournament name (e.g. May 2026 Club Night)" maxlength="80">
+      <button type="button" class="btn-archive-save" onclick="saveTournamentResult()">💾 Save final result</button>
+    </div>
   </div>
+
+  <div id="archiveViewBanner" style="display:none;"></div>
+
+  <details class="card section-card" id="archiveCard" open>
+    <summary><h2>📁 Saved results</h2><span class="section-count" id="archiveCount"></span></summary>
+    <div class="section-body">
+      <p class="hint" style="margin-top:0;">Results are stored on this device. <strong>Download</strong> a file to share or back up, then <strong>Upload</strong> on another phone or laptop.</p>
+      <div class="archive-transfer-bar">
+        <button type="button" class="btn-archive-download" onclick="downloadAllResults()">⬇ Download all results</button>
+        <label class="btn-archive-upload">
+          ⬆ Upload results
+          <input type="file" id="archiveUploadFile" accept=".json,application/json" hidden onchange="uploadResults(this)">
+        </label>
+        <p class="archive-transfer-hint">Downloads a <code>.json</code> file with teams, scores, and champion. Upload merges into your saved list.</p>
+      </div>
+      <div class="archive-list" id="archiveList"></div>
+    </div>
+  </details>
 
   <details class="card section-card" id="teamsCard" style="display:none;" open>
     <summary><h2>👥 Teams</h2><span class="section-count" id="teamsCount"></span></summary>
@@ -1346,6 +1580,7 @@ const NUM_POOLS = 3;
 const DEFAULT_SETS = 1;
 const MAX_SETS = 3;
 const STORAGE_KEY = "tournamentState_v4";
+const ARCHIVE_KEY = "tournamentArchive_v1";
 
 /* ========== STATE ========== */
 let players = [];
@@ -1359,14 +1594,50 @@ let playoffFormat = null; // null | "semifinal" | "super6"
 let super6Pools = [[], []];
 let matchScores = {};
 let phase = "setup"; // setup | teams | pools | pool_play | playoffs
+let archiveViewMode = false;
+let viewingArchiveId = null;
+let viewingArchiveName = "";
+let liveStateBackup = null;
 
 /* ========== PERSISTENCE ========== */
-function saveState() {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify({
+function snapshotState() {
+  return {
     players,
-    teams, unpairedPlayers, pairingWarnings, pools, poolFixtures, playoffMatches,
-    playoffFormat, super6Pools, matchScores, phase
+    teams,
+    unpairedPlayers,
+    pairingWarnings,
+    pools,
+    poolFixtures,
+    playoffMatches,
+    playoffFormat,
+    super6Pools,
+    matchScores,
+    phase
+  };
+}
+
+function applyState(s) {
+  players = s.players || [];
+  teams = (s.teams || []).map(t => ({
+    ...t,
+    pairGap: t.pairGap ?? 2,
+    pairTier: t.pairTier || "ideal",
+    teamType: t.teamType || inferTeamType(t)
   }));
+  unpairedPlayers = s.unpairedPlayers || [];
+  pairingWarnings = s.pairingWarnings || [];
+  pools = s.pools || [[], [], []];
+  poolFixtures = s.poolFixtures || [];
+  playoffMatches = s.playoffMatches || [];
+  playoffFormat = s.playoffFormat || null;
+  super6Pools = s.super6Pools || [[], []];
+  matchScores = migrateAllMatchScores(s.matchScores || {});
+  phase = s.phase || "setup";
+}
+
+function saveState() {
+  if (archiveViewMode) return;
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(snapshotState()));
 }
 
 function loadState() {
@@ -1374,30 +1645,344 @@ function loadState() {
   if (!raw) return;
   try {
     const s = JSON.parse(raw);
-    players = s.players || [
-      ...(s.menFile || []),
-      ...(s.mixedFile || []),
-      ...(s.ladiesFile || [])
-    ];
-    teams = (s.teams || []).map(t => ({
-      ...t,
-      pairGap: t.pairGap ?? 2,
-      pairTier: t.pairTier || "ideal",
-      teamType: t.teamType || inferTeamType(t)
-    }));
-    unpairedPlayers = s.unpairedPlayers || [];
-    pairingWarnings = s.pairingWarnings || [];
-    pools = s.pools || [[], [], []];
-    poolFixtures = s.poolFixtures || [];
-    playoffMatches = s.playoffMatches || [];
-    playoffFormat = s.playoffFormat || null;
-    super6Pools = s.super6Pools || [[], []];
-    matchScores = migrateAllMatchScores(s.matchScores || {});
-    phase = s.phase || "setup";
+    if (!s.players?.length && (s.menFile || s.mixedFile || s.ladiesFile)) {
+      s.players = [
+        ...(s.menFile || []),
+        ...(s.mixedFile || []),
+        ...(s.ladiesFile || [])
+      ];
+    }
+    applyState(s);
     render();
   } catch (e) {
     console.warn("Could not load saved state", e);
   }
+}
+
+function getArchiveList() {
+  try {
+    return JSON.parse(localStorage.getItem(ARCHIVE_KEY) || "[]");
+  } catch {
+    return [];
+  }
+}
+
+function setArchiveList(list) {
+  localStorage.setItem(ARCHIVE_KEY, JSON.stringify(list));
+}
+
+function formatArchiveDate(iso) {
+  try {
+    return new Date(iso).toLocaleString(undefined, {
+      dateStyle: "medium",
+      timeStyle: "short"
+    });
+  } catch {
+    return iso;
+  }
+}
+
+function getFinalResult() {
+  resolveFinalists();
+  const final = playoffMatches.find(m => m.phase === "final");
+  if (!final?.match?.[0] || !final?.match?.[1]) return null;
+
+  const winner = getMatchWinnerTeam(final);
+  if (!winner) return null;
+
+  const runnerUp = winner.id === final.match[0].id ? final.match[1] : final.match[0];
+  const score = getMatchScore(final.id);
+  const sets = score.sets.slice(0, score.numSets).filter(s => s.a != null && s.b != null);
+  const scoreText = sets.map(s => `${s.a}-${s.b}`).join(", ");
+
+  return {
+    winner,
+    runnerUp,
+    scoreText: scoreText || null,
+    final
+  };
+}
+
+function saveTournamentResult() {
+  if (archiveViewMode) {
+    alert("Exit the saved result view before saving a new one.");
+    return;
+  }
+
+  const result = getFinalResult();
+  if (!result) {
+    alert("Complete the final and enter scores before saving.");
+    return;
+  }
+
+  const nameInput = document.getElementById("archiveNameInput");
+  const defaultName = `Tournament ${new Date().toLocaleDateString()}`;
+  const name = (nameInput?.value || "").trim() || defaultName;
+
+  const entry = {
+    id: `arc_${Date.now()}`,
+    name,
+    savedAt: new Date().toISOString(),
+    summary: {
+      champion: teamLabel(result.winner),
+      runnerUp: teamLabel(result.runnerUp),
+      finalScore: result.scoreText,
+      playoffFormat,
+      playerCount: players.length,
+      teamCount: teams.length,
+      phase
+    },
+    state: snapshotState()
+  };
+
+  const list = getArchiveList();
+  list.unshift(entry);
+  setArchiveList(list);
+
+  if (nameInput) nameInput.value = "";
+  render();
+  alert(`Saved “${name}”. Download it from Saved results to open on another device.`);
+}
+
+function downloadJsonFile(filename, data) {
+  const blob = new Blob([JSON.stringify(data, null, 2)], { type: "application/json" });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = filename;
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  URL.revokeObjectURL(url);
+}
+
+function slugifyFilename(name) {
+  return (name || "tournament")
+    .replace(/[^\w\s-]/g, "")
+    .replace(/\s+/g, "-")
+    .slice(0, 40) || "tournament";
+}
+
+function downloadAllResults() {
+  const list = getArchiveList();
+  if (!list.length) {
+    alert("No saved results to download.");
+    return;
+  }
+  const stamp = new Date().toISOString().slice(0, 10);
+  downloadJsonFile(`knocklyon-tournament-results-${stamp}.json`, {
+    type: "knocklyon-tournament-archive",
+    version: 1,
+    exportedAt: new Date().toISOString(),
+    results: list
+  });
+}
+
+function downloadResult(id) {
+  const entry = getArchiveList().find(a => a.id === id);
+  if (!entry) return;
+  downloadJsonFile(`knocklyon-${slugifyFilename(entry.name)}.json`, {
+    type: "knocklyon-tournament-archive",
+    version: 1,
+    exportedAt: new Date().toISOString(),
+    results: [entry]
+  });
+}
+
+function normalizeUploadPayload(data) {
+  if (!data) return [];
+  if (data.type === "knocklyon-tournament-archive" && Array.isArray(data.results)) {
+    return data.results;
+  }
+  if (Array.isArray(data)) return data;
+  if (data.id && data.state && data.summary) return [data];
+  return [];
+}
+
+function mergeUploadedResults(incoming) {
+  const existing = getArchiveList();
+  const existingIds = new Set(existing.map(x => x.id));
+  let added = 0;
+  let skipped = 0;
+
+  incoming.forEach(entry => {
+    if (!entry.state || !entry.summary) {
+      skipped++;
+      return;
+    }
+    if (existingIds.has(entry.id)) {
+      entry.id = `arc_${Date.now()}_${Math.random().toString(36).slice(2, 7)}`;
+    }
+    existingIds.add(entry.id);
+    existing.unshift(entry);
+    added++;
+  });
+
+  existing.sort((a, b) => new Date(b.savedAt) - new Date(a.savedAt));
+  setArchiveList(existing);
+  return { added, skipped };
+}
+
+function uploadResults(input) {
+  const file = input?.files?.[0];
+  if (!file) return;
+
+  const reader = new FileReader();
+  reader.onload = (e) => {
+    try {
+      const data = JSON.parse(e.target.result);
+      const incoming = normalizeUploadPayload(data);
+      if (!incoming.length) {
+        alert("Invalid file — expected a Knocklyon tournament results .json file.");
+        return;
+      }
+      const { added, skipped } = mergeUploadedResults(incoming);
+      render();
+      alert(`Upload complete: ${added} result(s) added${skipped ? `, ${skipped} skipped` : ""}.`);
+    } catch {
+      alert("Could not read file. Make sure it is a valid .json download from this app.");
+    }
+    input.value = "";
+  };
+  reader.readAsText(file);
+}
+
+function loadArchivedResult(id) {
+  const entry = getArchiveList().find(a => a.id === id);
+  if (!entry) {
+    alert("Saved result not found.");
+    renderArchiveList();
+    return;
+  }
+
+  if (!archiveViewMode) {
+    liveStateBackup = snapshotState();
+  }
+
+  applyState(entry.state);
+  archiveViewMode = true;
+  viewingArchiveId = id;
+  viewingArchiveName = entry.name;
+  render();
+  document.getElementById("archiveCard")?.scrollIntoView({ behavior: "smooth", block: "start" });
+}
+
+function exitArchiveView() {
+  if (!archiveViewMode) return;
+
+  if (liveStateBackup) {
+    applyState(liveStateBackup);
+    saveState();
+  }
+
+  archiveViewMode = false;
+  viewingArchiveId = null;
+  viewingArchiveName = "";
+  liveStateBackup = null;
+  render();
+}
+
+function deleteArchivedResult(id) {
+  const entry = getArchiveList().find(a => a.id === id);
+  if (!entry) return;
+  if (!confirm(`Delete saved result “${entry.name}”?`)) return;
+
+  const list = getArchiveList().filter(a => a.id !== id);
+  setArchiveList(list);
+
+  if (viewingArchiveId === id) {
+    exitArchiveView();
+  } else {
+    renderArchiveList();
+  }
+}
+
+function renderArchiveList() {
+  const list = getArchiveList();
+  const el = document.getElementById("archiveList");
+  const countEl = document.getElementById("archiveCount");
+  if (!el) return;
+
+  if (countEl) countEl.textContent = list.length ? `${list.length} saved` : "";
+
+  if (!list.length) {
+    el.innerHTML = `<p class="hint">No saved results yet. Finish the final and click <strong>Save final result</strong>.</p>`;
+    return;
+  }
+
+  el.innerHTML = list.map(entry => {
+    const s = entry.summary || {};
+    const formatLabel = s.playoffFormat === "super6" ? "Super 6" : s.playoffFormat === "semifinal" ? "Semifinals" : "—";
+    const active = viewingArchiveId === entry.id ? " style=\"border-color:var(--red-400);background:#fff5f5;\"" : "";
+    return `
+      <div class="archive-item"${active}>
+        <div>
+          <div class="archive-item-title">${escapeHtml(entry.name)}</div>
+          <div class="archive-item-meta">
+            ${formatArchiveDate(entry.savedAt)}
+            · ${s.teamCount || "?"} teams · ${formatLabel}
+            ${s.champion ? `<br><span class="archive-item-champion">🏆 ${escapeHtml(s.champion)}</span>${s.finalScore ? ` (${escapeHtml(s.finalScore)})` : ""}` : ""}
+            ${s.runnerUp ? `<br>Runner-up: ${escapeHtml(s.runnerUp)}` : ""}
+          </div>
+        </div>
+        <div class="archive-item-actions">
+          <button type="button" class="btn-archive-load" onclick="loadArchivedResult('${entry.id}')">View</button>
+          <button type="button" class="btn-archive-dl-one" onclick="downloadResult('${entry.id}')">Download</button>
+          <button type="button" class="btn-archive-delete" onclick="deleteArchivedResult('${entry.id}')">Delete</button>
+        </div>
+      </div>`;
+  }).join("");
+}
+
+function escapeHtml(str) {
+  if (!str) return "";
+  return String(str)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;");
+}
+
+function renderArchiveBanner() {
+  const banner = document.getElementById("archiveViewBanner");
+  const container = document.querySelector(".container");
+  if (!banner) return;
+
+  if (archiveViewMode) {
+    banner.style.display = "block";
+    banner.innerHTML = `
+      <div class="archive-banner">
+        <span>Viewing saved result: <strong>${escapeHtml(viewingArchiveName)}</strong> (read-only)</span>
+        <button type="button" class="btn-exit-archive" onclick="exitArchiveView()">← Back to live tournament</button>
+      </div>`;
+    container?.classList.add("view-mode");
+  } else {
+    banner.style.display = "none";
+    banner.innerHTML = "";
+    container?.classList.remove("view-mode");
+  }
+}
+
+function renderChampionBanner() {
+  const result = getFinalResult();
+  if (!result) return "";
+
+  return `
+    <div class="champion-banner">
+      <div class="trophy">🏆</div>
+      <h3>${escapeHtml(teamLabel(result.winner))}</h3>
+      <p>Champions${result.scoreText ? ` · Final ${escapeHtml(result.scoreText)}` : ""}</p>
+      ${result.runnerUp ? `<p style="margin-top:8px;font-size:0.85rem;">Runner-up: ${escapeHtml(teamLabel(result.runnerUp))}</p>` : ""}
+    </div>`;
+}
+
+function updateSaveResultToolbar() {
+  const toolbar = document.getElementById("saveResultToolbar");
+  if (!toolbar) return;
+  const canSave = !archiveViewMode && !!getFinalResult();
+  toolbar.style.display = canSave || (!archiveViewMode && teams.length) ? "flex" : "none";
+  const saveBtn = toolbar.querySelector(".btn-archive-save");
+  if (saveBtn) saveBtn.disabled = !canSave;
 }
 
 /* ========== CSV ========== */
@@ -2222,6 +2807,7 @@ function getMatchScore(matchId) {
 }
 
 function updateSetScore(matchId, setIndex, side, value) {
+  if (archiveViewMode) return;
   const s = getMatchScore(matchId);
   if (!s.sets[setIndex]) s.sets[setIndex] = emptySetScore();
   s.sets[setIndex][side] = value === "" ? null : Number(value);
@@ -2229,6 +2815,7 @@ function updateSetScore(matchId, setIndex, side, value) {
 }
 
 function addSet(matchId) {
+  if (archiveViewMode) return;
   const s = getMatchScore(matchId);
   if (s.numSets >= MAX_SETS) return;
   s.numSets += 1;
@@ -2403,6 +2990,22 @@ function renderSetInputs(m) {
   const s = getMatchScore(m.id);
   const rows = [];
 
+  if (archiveViewMode) {
+    for (let i = 0; i < s.numSets; i++) {
+      const set = s.sets[i] || emptySetScore();
+      const a = set.a ?? "—";
+      const b = set.b ?? "—";
+      rows.push(`
+        <div class="set-row">
+          <label>Set ${i + 1}</label>
+          <span style="font-weight:700;min-width:64px;text-align:center;">${a}</span>
+          <span>–</span>
+          <span style="font-weight:700;min-width:64px;text-align:center;">${b}</span>
+        </div>`);
+    }
+    return rows.join("");
+  }
+
   for (let i = 0; i < s.numSets; i++) {
     const set = s.sets[i] || emptySetScore();
     rows.push(`
@@ -2449,7 +3052,7 @@ function renderMatchCard(m) {
       </div>
       ${hcap && hcap !== "No handicap" ? `<div class="handicap-note">${hcap}</div>` : ""}
       <div class="score-block">${renderSetInputs(m)}</div>
-      <button type="button" class="btn-save" onclick="afterScoreSave()">Save scores</button>
+      ${archiveViewMode ? "" : `<button type="button" class="btn-save" onclick="afterScoreSave()">Save scores</button>`}
     </div>`;
 }
 
@@ -2513,16 +3116,26 @@ function renderPlayoffMatchesGrouped() {
 }
 
 function renderPlayoffs() {
-  if (!poolFixtures.length) return "";
+  if (!poolFixtures.length && !archiveViewMode) return "";
 
-  if (!playoffFormat) return renderPlayoffChooser();
+  if (!playoffFormat && !archiveViewMode) return renderPlayoffChooser();
 
-  const formatName = playoffFormat === "semifinal" ? "Semifinals" : "Super 6";
-  let html = `
-    <div class="playoff-format-bar">
-      <span>Format: <strong>${formatName}</strong></span>
-      <button type="button" class="btn-change-format" onclick="resetPlayoffFormat()">Change format</button>
-    </div>`;
+  const formatName = playoffFormat === "semifinal" ? "Semifinals" : playoffFormat === "super6" ? "Super 6" : "Playoffs";
+  let html = "";
+
+  if (getFinalResult()) {
+    html += renderChampionBanner();
+  }
+
+  if (!archiveViewMode) {
+    html += `
+      <div class="playoff-format-bar">
+        <span>Format: <strong>${formatName}</strong></span>
+        <button type="button" class="btn-change-format" onclick="resetPlayoffFormat()">Change format</button>
+      </div>`;
+  } else {
+    html += `<div class="playoff-format-bar"><span>Format: <strong>${formatName}</strong></span></div>`;
+  }
 
   if (playoffFormat === "super6") {
     const qualified = getTopTwoPerPool();
@@ -2559,6 +3172,10 @@ function afterScoreSave() {
 
 function resetTournament() {
   if (!confirm("Clear all teams, pools, scores, and fixtures?")) return;
+  archiveViewMode = false;
+  viewingArchiveId = null;
+  viewingArchiveName = "";
+  liveStateBackup = null;
   players = [];
   teams = [];
   unpairedPlayers = [];
@@ -2597,9 +3214,9 @@ function renderSteps() {
     </div>`;
   }).join("");
 
-  document.getElementById("btnPools").disabled = !teams.length;
-  document.getElementById("btnPoolFx").disabled = !pools.some(p => p.length);
-  document.getElementById("btnPlayoffs").disabled = !poolFixtures.length;
+  document.getElementById("btnPools").disabled = archiveViewMode || !teams.length;
+  document.getElementById("btnPoolFx").disabled = archiveViewMode || !pools.some(p => p.length);
+  document.getElementById("btnPlayoffs").disabled = archiveViewMode || !poolFixtures.length;
 }
 
 function updatePlayersCountUI() {
@@ -2615,8 +3232,13 @@ function updatePlayersCountUI() {
 }
 
 function render() {
+  if (phase === "playoffs") resolveFinalists();
+
   refreshAllHandicaps();
   renderSteps();
+  renderArchiveBanner();
+  renderArchiveList();
+  updateSaveResultToolbar();
 
   updatePlayersCountUI();
 
@@ -2717,10 +3339,8 @@ function render() {
     fxCard.style.display = "none";
   }
 
-  if (phase === "playoffs") resolveFinalists();
-
   const poCard = document.getElementById("playoffsCard");
-  if (poolFixtures.length) {
+  if (poolFixtures.length || (archiveViewMode && playoffMatches.length)) {
     poCard.style.display = "block";
     document.getElementById("playoffs").innerHTML = renderPlayoffs();
   } else {
